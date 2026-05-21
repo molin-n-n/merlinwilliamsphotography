@@ -156,17 +156,12 @@
 
     .hero-scroll {
       position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      display: flex; flex-direction: column; align-items: center;
       opacity: 0; animation: fadeIn 1s 1.8s forwards;
     }
 
-    .hero-scroll span {
-      font-size: 0.55rem; letter-spacing: 0.28em;
-      text-transform: uppercase; color: rgba(255,255,255,0.25);
-    }
-
     .scroll-line {
-      width: 1px; height: 40px; background: rgba(255,255,255,0.2);
+      width: 1px; height: 44px; background: rgba(255,255,255,0.2);
       animation: scrollPulse 2.2s 2s infinite;
     }
 
@@ -234,7 +229,8 @@
       -webkit-user-drag: none;
     }
 
-    .c-item:hover img { filter: brightness(0.95); }
+    /* Hover brightens image but does NOT pause carousel */
+    .c-item:hover img { filter: brightness(0.96); }
 
     /* Peek overlay — scales up while held */
     .peek-overlay {
@@ -588,7 +584,23 @@
     }
 
     .lightbox.active { display: flex; }
-    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+
+    .lb-img-wrap {
+      position: relative; max-width: 90vw; max-height: 90vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; display: block; }
+
+    /* Persistent subtle gradient + title at bottom of lightbox image */
+    .lb-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 3rem 1.2rem 1rem;
+      background: linear-gradient(transparent, rgba(8,8,8,0.72));
+      font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.6);
+      pointer-events: none;
+    }
 
     .lightbox-close {
       position: absolute; top: 1.5rem; right: 2rem;
@@ -629,11 +641,16 @@
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .nav-links.open {
-        display: flex; flex-direction: column; position: fixed; inset: 0;
-        background: rgba(14,14,14,0.97);
-        align-items: center; justify-content: center; gap: 2.5rem; z-index: 210;
+        display: flex; flex-direction: column; position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(14,14,14,0.98);
+        align-items: center; justify-content: center;
+        gap: 3rem; z-index: 210;
+        padding: 0; /* no top padding — centred by justify-content */
       }
-      .nav-links.open a { font-size: 0.9rem; }
+      .nav-links.open a {
+        font-size: 1.05rem; letter-spacing: 0.22em; color: var(--g1);
+      }
       .nav-hamburger { display: flex; }
 
       .strip-header { padding: 0 1.5rem 2rem; }
@@ -642,10 +659,12 @@
 
       .gallery-grid {
         padding: 0 1.5rem 4rem; grid-template-columns: 1fr 1fr;
-        grid-auto-rows: 200px; gap: 5px;
+        grid-auto-rows: 180px; gap: 4px;
       }
+      /* Reset all spanning on mobile so every item is equal 1-col, no gaps */
       .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; }
-      .gi-a, .gi-h, .gi-l { grid-column: span 2 !important; }
+      /* A few wider ones stay 2-col for visual rhythm */
+      .gi-a, .gi-e, .gi-h { grid-column: span 2 !important; }
 
       .about-body-wrap { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem; }
       .about-profile-col { position: static; }
@@ -706,7 +725,7 @@
       </div>
       <span class="watermark" aria-hidden="true">&copy; Merlin Williams Photography</span>
       <div class="hero-scroll" aria-hidden="true">
-        <span>Scroll</span><div class="scroll-line"></div>
+        <div class="scroll-line"></div>
       </div>
     </section>
 
@@ -971,7 +990,10 @@
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lb-close">Close</button>
     <button class="lightbox-prev" id="lb-prev">&#8592; Prev</button>
-    <img id="lb-img" src="" alt="Enlarged photo" />
+    <div class="lb-img-wrap">
+      <img id="lb-img" src="" alt="Enlarged photo" />
+      <div class="lb-caption" id="lb-caption"></div>
+    </div>
     <button class="lightbox-next" id="lb-next">Next &#8594;</button>
   </div>
 
@@ -1066,7 +1088,8 @@
     // After layout: measure one set width, jump track to middle copy
     let setWidth = 0;
     let translateX = 0;
-    let speed = 0.45;      // px per frame
+    let speed = 0.25;        // ~half previous speed of 0.45
+    let currentSpeed = 0.25; // actual speed (eases up from 0 on resume)
     let animId = null;
     let paused = false;
     let resumeTimer = null;
@@ -1076,7 +1099,7 @@
       const n = carouselSrcs.length;
       let w = 0;
       for (let i = 0; i < n; i++) {
-        w += items[i].offsetWidth + 6; // 6 = gap
+        w += items[i].offsetWidth + 6;
       }
       return w;
     }
@@ -1085,16 +1108,23 @@
       if (animId) return;
       function step() {
         if (!paused) {
-          translateX -= speed;
-          // When we've scrolled one full set, jump back silently
+          // Ease currentSpeed toward target speed smoothly
+          currentSpeed += (speed - currentSpeed) * 0.035;
+          translateX -= currentSpeed;
           if (Math.abs(translateX) >= setWidth) {
             translateX += setWidth;
             track.classList.add('no-transition');
             track.style.transform = `translateX(${translateX}px)`;
-            // Force reflow then remove class
             track.getBoundingClientRect();
             track.classList.remove('no-transition');
           } else {
+            track.style.transform = `translateX(${translateX}px)`;
+          }
+        } else {
+          // While paused, decay speed toward 0 for smooth stop
+          currentSpeed *= 0.85;
+          if (currentSpeed > 0.01) {
+            translateX -= currentSpeed;
             track.style.transform = `translateX(${translateX}px)`;
           }
         }
@@ -1106,13 +1136,15 @@
     function pauseCarousel() {
       paused = true;
       clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => { paused = false; }, 5000);
+      resumeTimer = setTimeout(() => {
+        // Reset currentSpeed to 0 so it eases back in smoothly
+        currentSpeed = 0;
+        paused = false;
+      }, 5000);
     }
 
-    // Initialise after fonts/layout settle
     window.addEventListener('load', () => {
       setWidth = computeSetWidth();
-      // Start at the beginning of the middle copy
       translateX = -setWidth;
       track.style.transform = `translateX(${translateX}px)`;
       startCarousel();
@@ -1148,8 +1180,9 @@
       track.querySelectorAll('.c-item').forEach(item => {
         const src = item.querySelector('img').src;
 
-        // ── Desktop: long press (mousedown hold) ──
+        // ── Desktop: long press ──
         item.addEventListener('mousedown', e => {
+          e.preventDefault(); // stops browser text-selection on first press
           pauseCarousel();
           longPressTimer = setTimeout(() => {
             openPeek(src);
@@ -1164,9 +1197,10 @@
         item.addEventListener('mouseleave', e => {
           clearTimeout(longPressTimer);
           if (peekOpen) closePeek();
+          // No pauseCarousel on mouseleave — hover does not pause
         });
 
-        // ── Mobile: tap to toggle ──
+        // ── Mobile: tap toggles peek ──
         item.addEventListener('touchstart', e => {
           pauseCarousel();
           longPressTimer = setTimeout(() => {
@@ -1177,15 +1211,13 @@
         item.addEventListener('touchend', e => {
           clearTimeout(longPressTimer);
           if (!peekOpen) {
-            // Short tap with no peek: treat as toggle open
             openPeek(src);
           } else {
             closePeek();
           }
         });
 
-        // Pause on any hover
-        item.addEventListener('mouseenter', () => pauseCarousel());
+        // Hover brightens image only — does NOT pause carousel
       });
     }
 
@@ -1195,14 +1227,38 @@
     const galleryImages = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o']
       .map(x => `images/${x}.jpg`);
 
-    let currentIndex = 0;
-    const lightbox = document.getElementById('lightbox');
-    const lbImg    = document.getElementById('lb-img');
+    const galleryLabels = [
+      'Deep Sky','Nebula','Star Field','Galaxy','Wide Field',
+      'Milky Way','Southern Sky','Deep Sky','Nebula',
+      'Star Cluster','Panorama','Galaxy','Deep Sky','Nebula','Southern Sky'
+    ];
 
-    function openLightbox(i)  { currentIndex = i; lbImg.src = galleryImages[i]; lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeLightbox()  { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
-    function lbPrev()         { currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length; lbImg.src = galleryImages[currentIndex]; }
-    function lbNext()         { currentIndex = (currentIndex + 1) % galleryImages.length; lbImg.src = galleryImages[currentIndex]; }
+    let currentIndex = 0;
+    const lightbox  = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lb-img');
+    const lbCaption = document.getElementById('lb-caption');
+
+    function openLightbox(i) {
+      currentIndex = i;
+      lbImg.src = galleryImages[i];
+      lbCaption.textContent = galleryLabels[i];
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+
+    function lbPrev() {
+      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+      lbImg.src = galleryImages[currentIndex];
+      lbCaption.textContent = galleryLabels[currentIndex];
+    }
+
+    function lbNext() {
+      currentIndex = (currentIndex + 1) % galleryImages.length;
+      lbImg.src = galleryImages[currentIndex];
+      lbCaption.textContent = galleryLabels[currentIndex];
+    }
 
     document.querySelectorAll('.gallery-item').forEach(item =>
       item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)))
