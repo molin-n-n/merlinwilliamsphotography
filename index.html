@@ -13,13 +13,15 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:     #050505;
-      --bg2:    #101010;
-      --white:  #e8e8e8;
-      --white2: #f0f0f0;
-      --g1:     #d0d0d0;
-      --g2:     #a0a0a0;
-      --g3:     #585858;
+      --bg:    #141414;
+      --bg2:   #1c1c1c;
+      --bg3:   #222222;
+      --white: #e8e8e8;
+      --w2:    #f0f0f0;
+      --g1:    #d0d0d0;
+      --g2:    #a0a0a0;
+      --g3:    #585858;
+      --border: rgba(255,255,255,0.07);
     }
 
     html { scroll-behavior: smooth; }
@@ -32,82 +34,53 @@
       overflow-x: hidden;
     }
 
-    /* ── PAGE SYSTEM ─────────────────────────────── */
+    /* ── PAGE SYSTEM ──────────────────────────────── */
     .page { display: none; min-height: 100vh; flex-direction: column; }
     .page.active { display: flex; }
 
-    /* ── NAV ─────────────────────────────────────── */
+    /* ── NAV ──────────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(4,4,4,0.94);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(20,20,20,0.95);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      text-decoration: none;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 0.9rem;
+      text-decoration: none; cursor: pointer;
     }
 
     .nav-avatar {
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 1px solid rgba(255,255,255,0.15);
-      display: block;
+      width: 34px; height: 34px; border-radius: 50%;
+      object-fit: cover; border: 1px solid rgba(255,255,255,0.15); display: block;
     }
 
     .nav-logo {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: var(--white2);
+      font-size: 1rem; font-weight: 500; letter-spacing: 0.04em; color: var(--w2);
     }
 
     .nav-links { display: flex; gap: 2.8rem; list-style: none; }
 
     .nav-links a {
-      font-family: 'DM Sans', system-ui, sans-serif;
-      font-size: 0.68rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--g2);
-      text-decoration: none;
-      transition: color 0.2s;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
+      font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--g2);
+      text-decoration: none; transition: color 0.2s;
+      cursor: pointer; background: none; border: none; padding: 0;
     }
 
-    .nav-links a:hover, .nav-links a.active { color: var(--white2); }
+    .nav-links a:hover, .nav-links a.active { color: var(--w2); }
 
     .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-      z-index: 220;
+      display: none; flex-direction: column; gap: 6px;
+      cursor: pointer; background: none; border: none; padding: 4px; z-index: 220;
     }
 
     .nav-hamburger span {
-      display: block; width: 22px; height: 1px;
-      background: var(--g1);
+      display: block; width: 22px; height: 1px; background: var(--g1);
       transition: transform 0.3s, opacity 0.3s;
     }
 
@@ -117,97 +90,73 @@
 
     .nav-spacer { height: 65px; }
 
-    /* ── HERO ────────────────────────────────────── */
+    /* ── HERO ─────────────────────────────────────── */
     .hero {
-      position: relative;
-      height: calc(100vh - 65px);
-      min-height: 540px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      position: relative; height: calc(100vh - 65px); min-height: 540px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
 
-    .hero-bg {
+    /* Two bg layers that crossfade */
+    .hero-bg-a, .hero-bg-b {
       position: absolute; inset: 0;
-      background-image: url('images/a.jpg');
-      background-size: cover;
-      background-position: center;
-      filter: blur(5px);
-      transform: scale(1.08);
+      background-size: cover; background-position: center;
+      filter: blur(5px); transform: scale(1.08);
+      transition: opacity 1.5s ease;
     }
 
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: rgba(32,0,0,0.55);
-    }
+    .hero-bg-a { opacity: 1; }
+    .hero-bg-b { opacity: 0; }
+
+    .hero-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.55); }
 
     .hero-content {
-      position: relative;
-      text-align: center;
-      padding: 0 2rem;
-      max-width: 860px;
+      position: relative; text-align: center; padding: 0 2rem; max-width: 860px;
     }
 
     .hero-eyebrow {
-      font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.34em; text-transform: uppercase;
-      color: var(--g2); margin-bottom: 1.4rem;
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.34em;
+      text-transform: uppercase; color: var(--g2); margin-bottom: 1.4rem;
       opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
     }
 
     .hero-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.8rem, 7vw, 6rem);
-      font-weight: 500; line-height: 1.08;
-      color: var(--white2); margin-bottom: 1.4rem;
+      font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 500; line-height: 1.08;
+      color: var(--w2); margin-bottom: 1.4rem;
       opacity: 0; animation: fadeUp 0.9s 0.45s forwards;
     }
 
     .hero-sub {
-      font-size: 0.72rem; font-weight: 400;
-      letter-spacing: 0.24em; text-transform: uppercase;
-      color: var(--g2); margin-bottom: 3rem;
+      font-size: 0.72rem; font-weight: 400; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--g2); margin-bottom: 3rem;
       opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
     }
 
     .hero-btns {
-      display: flex; gap: 1.2rem;
-      justify-content: center; flex-wrap: wrap;
+      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
       opacity: 0; animation: fadeUp 0.9s 0.95s forwards;
     }
 
     .btn-outline {
-      display: inline-block;
-      padding: 0.85rem 2.6rem;
-      border: 1px solid rgba(255,255,255,0.35);
-      color: var(--white2);
-      font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.24em; text-transform: uppercase;
-      text-decoration: none; cursor: pointer;
-      background: none;
-      transition: background 0.25s, border-color 0.25s;
+      display: inline-block; padding: 0.85rem 2.6rem;
+      border: 1px solid rgba(255,255,255,0.35); color: var(--w2);
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.24em;
+      text-transform: uppercase; text-decoration: none; cursor: pointer;
+      background: none; transition: background 0.25s, border-color 0.25s;
     }
 
-    .btn-outline:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: var(--white2);
-    }
+    .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: var(--w2); }
 
     .watermark {
       position: absolute; bottom: 3.2rem; right: 2rem;
-      font-size: 0.55rem; font-weight: 300;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(255,255,255,0.13);
-      writing-mode: vertical-rl;
-      pointer-events: none; user-select: none;
+      font-size: 0.55rem; font-weight: 300; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.12);
+      writing-mode: vertical-rl; pointer-events: none; user-select: none;
     }
 
     .hero-scroll {
-      position: absolute; bottom: 2rem; left: 50%;
-      transform: translateX(-50%);
-      display: flex; flex-direction: column;
-      align-items: center; gap: 8px;
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
       opacity: 0; animation: fadeIn 1s 1.8s forwards;
     }
 
@@ -217,99 +166,115 @@
     }
 
     .scroll-line {
-      width: 1px; height: 40px;
-      background: rgba(255,255,255,0.2);
+      width: 1px; height: 40px; background: rgba(255,255,255,0.2);
       animation: scrollPulse 2.2s 2s infinite;
     }
 
-    /* ── SHARED SECTION LABELS ───────────────────── */
+    /* ── SHARED ───────────────────────────────────── */
     .section-label {
-      font-size: 0.6rem; font-weight: 400;
-      letter-spacing: 0.34em; text-transform: uppercase;
-      color: var(--g3); margin-bottom: 0.6rem;
+      font-size: 0.6rem; font-weight: 400; letter-spacing: 0.34em;
+      text-transform: uppercase; color: var(--g3); margin-bottom: 0.6rem;
     }
 
     .section-heading {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.9rem);
-      font-weight: 500; color: var(--white2);
-      line-height: 1.2; margin-bottom: 3rem;
+      font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 500;
+      color: var(--w2); line-height: 1.2; margin-bottom: 3rem;
     }
 
-    /* ── IMAGE STRIP ─────────────────────────────── */
-    .strip-section { padding: 5rem 0 0; background: var(--bg); }
+    /* ── INFINITY CAROUSEL ────────────────────────── */
+    .strip-section { padding: 5rem 0 0; }
 
     .strip-header {
       padding: 0 3rem 2.5rem;
-      display: flex; align-items: flex-end;
-      justify-content: space-between;
+      display: flex; align-items: flex-end; justify-content: space-between;
     }
 
     .strip-header .section-heading { margin-bottom: 0; }
 
     .strip-cta {
-      font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--g3); cursor: pointer;
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--g3); cursor: pointer;
       background: none; border: none; border-bottom: 1px solid var(--g3);
       padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
     }
 
-    .strip-cta:hover { color: var(--white2); border-color: var(--white2); }
+    .strip-cta:hover { color: var(--w2); border-color: var(--w2); }
 
-    .image-strip {
+    /* The viewport */
+    .carousel-outer {
+      position: relative; overflow: hidden; width: 100%;
+      user-select: none; -webkit-user-select: none;
+    }
+
+    /* The infinitely-duplicated inner track */
+    .carousel-track {
       display: flex; gap: 6px;
-      overflow-x: auto; scrollbar-width: none;
-      padding: 0 3rem; cursor: grab;
+      will-change: transform;
     }
 
-    .image-strip::-webkit-scrollbar { display: none; }
-    .image-strip.dragging { cursor: grabbing; }
+    .carousel-track.no-transition { transition: none !important; }
 
-    .strip-item {
-      flex: 0 0 auto; height: 340px;
-      overflow: hidden; background: var(--bg2);
+    .c-item {
+      flex: 0 0 auto; height: 340px; overflow: hidden;
+      position: relative; background: var(--bg2);
+      cursor: pointer;
     }
 
-    .strip-item:nth-child(3n+1) { width: 480px; }
-    .strip-item:nth-child(3n+2) { width: 320px; }
-    .strip-item:nth-child(3n+3) { width: 400px; }
+    /* Vary widths */
+    .c-item:nth-child(3n+1) { width: 480px; }
+    .c-item:nth-child(3n+2) { width: 310px; }
+    .c-item:nth-child(3n+3) { width: 390px; }
 
-    .strip-item img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-      filter: brightness(0.8);
-      transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.35s;
-      pointer-events: none;
+    .c-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(0.78);
+      transition: filter 0.35s;
+      pointer-events: none; /* prevent drag-ghost */
+      -webkit-user-drag: none;
     }
 
-    .strip-item:hover img { transform: scale(1.05); filter: brightness(1); }
+    .c-item:hover img { filter: brightness(0.95); }
+
+    /* Peek overlay — scales up while held */
+    .peek-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,10,10,0.88);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .peek-overlay.active { opacity: 1; pointer-events: all; }
+
+    .peek-overlay img {
+      max-width: 90vw; max-height: 88vh;
+      object-fit: contain;
+      transform: scale(0.92);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .peek-overlay.active img { transform: scale(1); }
 
     .strip-view-all {
-      display: flex; align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       padding: 2.5rem 3rem 5rem;
     }
 
-    /* ── SERVICES TEASER ─────────────────────────── */
+    /* ── SERVICES TEASER ──────────────────────────── */
     .services-teaser {
       padding: 5rem 3rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid var(--border);
     }
 
     .services-teaser-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1px;
-      border: 1px solid rgba(255,255,255,0.06);
-      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px; border: 1px solid var(--border); margin-top: 3rem;
     }
 
     .st-card {
-      padding: 2.5rem 2rem;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: var(--bg);
-      transition: background 0.25s;
+      padding: 2.5rem 2rem; border: 1px solid var(--border);
+      background: var(--bg); transition: background 0.25s;
     }
 
     .st-card:hover { background: var(--bg2); }
@@ -317,33 +282,26 @@
     .st-num {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.6rem; font-weight: 400;
-      color: rgba(255,255,255,0.08); margin-bottom: 1.2rem;
+      color: rgba(255,255,255,0.07); margin-bottom: 1.2rem;
     }
 
     .st-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.1rem; font-weight: 500;
-      color: var(--white2); margin-bottom: 0.6rem;
+      font-size: 1.1rem; font-weight: 500; color: var(--w2); margin-bottom: 0.6rem;
     }
 
-    .st-desc {
-      font-size: 0.82rem; font-weight: 300;
-      line-height: 1.75; color: var(--g2);
-    }
+    .st-desc { font-size: 0.82rem; font-weight: 300; line-height: 1.75; color: var(--g2); }
 
     .services-teaser-footer { margin-top: 2.5rem; text-align: center; }
 
-    /* ── FEATURED AS ─────────────────────────────── */
+    /* ── FEATURED AS ──────────────────────────────── */
     .featured-as {
-      padding: 4rem 3rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      text-align: center;
+      padding: 4rem 3rem; border-top: 1px solid var(--border); text-align: center;
     }
 
     .featured-as-label {
-      font-size: 0.6rem; font-weight: 400;
-      letter-spacing: 0.32em; text-transform: uppercase;
-      color: var(--g3); margin-bottom: 2rem;
+      font-size: 0.6rem; font-weight: 400; letter-spacing: 0.32em;
+      text-transform: uppercase; color: var(--g3); margin-bottom: 2rem;
     }
 
     .featured-as-logos {
@@ -351,91 +309,72 @@
       justify-content: center; gap: 4rem; flex-wrap: wrap;
     }
 
-    /* Double the previous size: was 36px, now 72px */
     .featured-as-logos img {
-      height: 72px; width: auto;
-      opacity: 0.85;
-      transition: opacity 0.3s;
-      object-fit: contain;
+      height: 72px; width: auto; opacity: 0.9;
+      transition: opacity 0.3s; object-fit: contain;
     }
 
     .featured-as-logos img:hover { opacity: 1; }
 
-    /* ── CONTACT SECTION ─────────────────────────── */
+    /* ── CONTACT ──────────────────────────────────── */
     .contact-section {
-      padding: 6rem 3rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      text-align: center;
+      padding: 6rem 3rem; border-top: 1px solid var(--border); text-align: center;
     }
 
-    .contact-section .section-heading {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      margin-bottom: 0.7rem;
-    }
+    .contact-section .section-heading { font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 0.7rem; }
 
-    .contact-sub {
-      font-size: 0.72rem; letter-spacing: 0.12em;
-      color: var(--g3); margin-bottom: 3rem;
-    }
+    .contact-sub { font-size: 0.72rem; letter-spacing: 0.12em; color: var(--g3); margin-bottom: 3rem; }
 
     .contact-email {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(1.1rem, 2.2vw, 1.8rem);
-      font-weight: 400; color: var(--g1);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,0.18);
-      padding-bottom: 0.2rem;
-      transition: color 0.2s, border-color 0.2s;
+      font-size: clamp(1.1rem, 2.2vw, 1.8rem); font-weight: 400; color: var(--g1);
+      text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18);
+      padding-bottom: 0.2rem; transition: color 0.2s, border-color 0.2s;
     }
 
-    .contact-email:hover { color: var(--white2); border-color: rgba(255,255,255,0.5); }
+    .contact-email:hover { color: var(--w2); border-color: rgba(255,255,255,0.5); }
 
-    /* Social icons row */
+    /* Social row with colour logos */
     .social-row {
-      display: flex; gap: 2rem;
-      justify-content: center; margin-top: 3rem;
-      align-items: center;
+      display: flex; gap: 2rem; justify-content: center;
+      margin-top: 3rem; align-items: center;
     }
 
     .social-link {
       display: flex; align-items: center; gap: 0.55rem;
-      text-decoration: none;
-      color: var(--g3);
-      font-size: 0.63rem; font-weight: 400;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      transition: color 0.2s;
+      text-decoration: none; color: var(--g3);
+      font-size: 0.63rem; font-weight: 400; letter-spacing: 0.18em;
+      text-transform: uppercase; transition: color 0.2s;
     }
 
-    .social-link:hover { color: var(--white2); }
+    .social-link:hover { color: var(--w2); }
 
-    .social-link svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .social-link .social-icon { width: 24px; height: 24px; flex-shrink: 0; display: block; }
 
-    /* ── FOOTER ──────────────────────────────────── */
+    /* AstroBin logo from uploaded file */
+    .astrobin-icon { width: 24px; height: 24px; object-fit: contain; display: block; }
+
+    /* ── FOOTER ───────────────────────────────────── */
     footer {
-      padding: 1.8rem 3rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      display: flex; align-items: center;
-      justify-content: space-between;
+      padding: 1.8rem 3rem; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 1rem;
     }
 
     .footer-logo {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 0.85rem; font-weight: 400;
-      color: rgba(255,255,255,0.22);
+      font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.2);
     }
 
     .footer-copy {
-      font-size: 0.58rem; font-weight: 300;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(255,255,255,0.15);
+      font-size: 0.58rem; font-weight: 300; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.14);
       text-align: center; flex: 1;
     }
 
     .footer-right {
-      font-size: 0.58rem; font-weight: 300;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(255,255,255,0.15);
+      font-size: 0.58rem; font-weight: 300; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.14);
     }
 
     /* ═══════════════════════════════════════════════
@@ -445,7 +384,6 @@
 
     .portfolio-header { padding: 4rem 3rem 2.5rem; }
 
-    /* Fixed gallery grid — strict rows that always sum to 12 cols */
     .gallery-grid {
       padding: 0 3rem 5rem;
       display: grid;
@@ -454,40 +392,35 @@
       gap: 6px;
     }
 
-    /* Row 1: 7 + 5 = 12 */
-    .gi-a { grid-column: span 7; grid-row: span 2; } /* tall left */
+    /* All rows strictly sum to 12 columns */
+    /* Row 1: 7+5=12  (a spans 2 rows tall) */
+    .gi-a { grid-column: span 7; grid-row: span 2; }
     .gi-b { grid-column: span 5; }
     .gi-c { grid-column: span 5; }
-
-    /* Row 2: 4 + 4 + 4 = 12 */
+    /* Row 2: 4+4+4=12 */
     .gi-d { grid-column: span 4; }
     .gi-e { grid-column: span 4; }
     .gi-f { grid-column: span 4; }
-
-    /* Row 3: 5 + 7 = 12, second one tall */
+    /* Row 3: 5 + 7tall + 5 = but h spans 2 rows */
     .gi-g { grid-column: span 5; }
-    .gi-h { grid-column: span 7; grid-row: span 2; } /* tall right */
+    .gi-h { grid-column: span 7; grid-row: span 2; }
     .gi-i { grid-column: span 5; }
-
-    /* Row 4: 3 + 3 + 6 = 12 */
+    /* Row 4: 3+3+6=12 */
     .gi-j { grid-column: span 3; }
     .gi-k { grid-column: span 3; }
     .gi-l { grid-column: span 6; }
-
-    /* Row 5: 4 + 4 + 4 = 12 */
+    /* Row 5: 4+4+4=12 */
     .gi-m { grid-column: span 4; }
     .gi-n { grid-column: span 4; }
     .gi-o { grid-column: span 4; }
 
     .gallery-item {
       overflow: hidden; position: relative;
-      cursor: pointer; background: var(--bg2);
-      min-height: 0; /* prevent grid blowout */
+      cursor: pointer; background: var(--bg2); min-height: 0;
     }
 
     .gallery-photo {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
+      width: 100%; height: 100%; object-fit: cover; display: block;
       filter: brightness(0.82);
       transition: transform 0.9s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.4s;
     }
@@ -497,10 +430,9 @@
     .gallery-caption {
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 2.5rem 1rem 0.9rem;
-      background: linear-gradient(transparent, rgba(32,0,0,0.85));
-      font-size: 0.58rem; font-weight: 400;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
+      background: linear-gradient(transparent, rgba(14,14,14,0.85));
+      font-size: 0.58rem; font-weight: 400; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
       opacity: 0; transition: opacity 0.3s;
     }
 
@@ -511,9 +443,7 @@
     ═══════════════════════════════════════════════ */
     #page-about { background: var(--bg); padding-top: 65px; }
 
-    .about-hero {
-      position: relative; height: 55vh; min-height: 320px; overflow: hidden;
-    }
+    .about-hero { position: relative; height: 55vh; min-height: 320px; overflow: hidden; }
 
     .about-hero-bg {
       position: absolute; inset: 0;
@@ -522,10 +452,7 @@
       filter: blur(4px); transform: scale(1.07);
     }
 
-    .about-hero-overlay {
-      position: absolute; inset: 0;
-      background: rgba(32,0,0,0.6);
-    }
+    .about-hero-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.6); }
 
     .about-hero-content {
       position: relative; height: 100%;
@@ -534,28 +461,24 @@
 
     .about-hero-content h1 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.4rem, 5vw, 4.5rem);
-      font-weight: 500; color: var(--white2); line-height: 1.1;
+      font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 500; color: var(--w2);
     }
 
     .about-body-wrap {
-      display: grid;
-      grid-template-columns: 280px 1fr;
+      display: grid; grid-template-columns: 280px 1fr;
       gap: 5rem; padding: 5rem 3rem; align-items: start;
     }
 
     .about-profile-col { position: sticky; top: 85px; }
 
     .about-profile-img {
-      width: 100%; aspect-ratio: 3/4;
-      object-fit: cover; display: block;
-      margin-bottom: 1.5rem; filter: brightness(0.9);
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      display: block; margin-bottom: 1.5rem; filter: brightness(0.9);
     }
 
     .about-profile-name {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.3rem; font-weight: 500;
-      color: var(--white2); margin-bottom: 0.3rem;
+      font-size: 1.3rem; font-weight: 500; color: var(--w2); margin-bottom: 0.3rem;
     }
 
     .about-profile-loc {
@@ -564,27 +487,21 @@
     }
 
     .about-featured {
-      margin-top: 2.5rem; padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.07);
+      margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border);
     }
 
     .about-featured-label {
-      font-size: 0.6rem; font-weight: 400;
-      letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--g3); margin-bottom: 1.5rem;
+      font-size: 0.6rem; font-weight: 400; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--g3); margin-bottom: 1.5rem;
     }
 
     .about-featured-logos {
-      display: flex; align-items: center;
-      gap: 2rem; flex-wrap: wrap;
+      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
     }
 
-    /* Double size, full colour */
     .about-featured-logos img {
-      height: 60px; width: auto;
-      opacity: 0.85;
-      transition: opacity 0.3s;
-      object-fit: contain;
+      height: 60px; width: auto; opacity: 0.9;
+      transition: opacity 0.3s; object-fit: contain;
     }
 
     .about-featured-logos img:hover { opacity: 1; }
@@ -597,22 +514,18 @@
     }
 
     .about-stat-row {
-      display: flex; gap: 2.5rem;
-      margin: 2.5rem 0; padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.07);
-      flex-wrap: wrap;
+      display: flex; gap: 2rem; margin: 2.5rem 0;
+      padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap;
     }
 
     .stat-num {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2.2rem; font-weight: 400;
-      color: var(--white2); line-height: 1;
+      font-size: 2.2rem; font-weight: 400; color: var(--w2); line-height: 1;
     }
 
     .stat-label {
-      font-size: 0.6rem; font-weight: 400;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--g3); margin-top: 0.4rem;
+      font-size: 0.6rem; font-weight: 400; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--g3); margin-top: 0.4rem;
     }
 
     /* ═══════════════════════════════════════════════
@@ -620,21 +533,15 @@
     ═══════════════════════════════════════════════ */
     #page-services { background: var(--bg); padding-top: 65px; }
 
-    .services-hero {
-      position: relative; height: 50vh; min-height: 280px; overflow: hidden;
-    }
+    .services-hero { position: relative; height: 50vh; min-height: 280px; overflow: hidden; }
 
     .services-hero-bg {
-      position: absolute; inset: 0;
-      background-image: url('images/h.jpg');
+      position: absolute; inset: 0; background-image: url('images/h.jpg');
       background-size: cover; background-position: center;
       filter: blur(5px); transform: scale(1.08);
     }
 
-    .services-hero-overlay {
-      position: absolute; inset: 0;
-      background: rgba(32,0,0,0.62);
-    }
+    .services-hero-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.62); }
 
     .services-hero-content {
       position: relative; height: 100%;
@@ -643,24 +550,19 @@
 
     .services-hero-content h1 {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: clamp(2.4rem, 5vw, 4.5rem);
-      font-weight: 500; color: var(--white2);
+      font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 500; color: var(--w2);
     }
 
     .services-body { padding: 5rem 3rem; }
 
     .services-full-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      border: 1px solid rgba(255,255,255,0.06);
-      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      border: 1px solid var(--border); margin-top: 3rem;
     }
 
     .service-card {
-      padding: 3rem 2rem;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: var(--bg);
-      transition: background 0.25s;
+      padding: 3rem 2rem; border: 1px solid var(--border);
+      background: var(--bg); transition: background 0.25s;
     }
 
     .service-card:hover { background: var(--bg2); }
@@ -668,57 +570,47 @@
     .service-num {
       font-family: 'Playfair Display', Georgia, serif;
       font-size: 1.8rem; font-weight: 400;
-      color: rgba(255,255,255,0.08);
-      margin-bottom: 1.5rem; line-height: 1;
+      color: rgba(255,255,255,0.07); margin-bottom: 1.5rem; line-height: 1;
     }
 
     .service-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 1.2rem; font-weight: 500;
-      color: var(--white2); margin-bottom: 0.9rem;
+      font-size: 1.2rem; font-weight: 500; color: var(--w2); margin-bottom: 0.9rem;
     }
 
-    .service-desc {
-      font-size: 0.85rem; font-weight: 300;
-      line-height: 1.8; color: var(--g2);
-    }
+    .service-desc { font-size: 0.85rem; font-weight: 300; line-height: 1.8; color: var(--g2); }
 
     /* ── LIGHTBOX ─────────────────────────────────── */
     .lightbox {
-      display: none; position: fixed; inset: 0;
-      z-index: 500; background: rgba(20,0,0,0.96);
+      display: none; position: fixed; inset: 0; z-index: 500;
+      background: rgba(10,10,10,0.96);
       align-items: center; justify-content: center;
     }
 
     .lightbox.active { display: flex; }
-
-    .lightbox img {
-      max-width: 90vw; max-height: 90vh; object-fit: contain;
-    }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
 
     .lightbox-close {
       position: absolute; top: 1.5rem; right: 2rem;
-      font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--g3); cursor: pointer;
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--g3); cursor: pointer;
       background: none; border: none; transition: color 0.2s;
     }
 
-    .lightbox-close:hover { color: var(--white2); }
+    .lightbox-close:hover { color: var(--w2); }
 
     .lightbox-prev, .lightbox-next {
       position: absolute; top: 50%; transform: translateY(-50%);
-      font-size: 0.65rem; font-weight: 400;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--g3); cursor: pointer;
+      font-size: 0.65rem; font-weight: 400; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--g3); cursor: pointer;
       background: none; border: none; padding: 1rem; transition: color 0.2s;
     }
 
     .lightbox-prev { left: 1.5rem; }
     .lightbox-next { right: 1.5rem; }
-    .lightbox-prev:hover, .lightbox-next:hover { color: var(--white2); }
+    .lightbox-prev:hover, .lightbox-next:hover { color: var(--w2); }
 
-    /* ── ANIMATIONS ──────────────────────────────── */
+    /* ── ANIMATIONS ───────────────────────────────── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -729,39 +621,29 @@
       50%      { opacity:.12; transform:scaleY(.5); }
     }
 
-    .reveal {
-      opacity: 0; transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── RESPONSIVE ──────────────────────────────── */
+    /* ── RESPONSIVE ───────────────────────────────── */
     @media (max-width: 960px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
       .nav-links.open {
-        display: flex; flex-direction: column;
-        position: fixed; inset: 0;
-        background: rgba(32,0,0,0.97);
-        align-items: center; justify-content: center;
-        gap: 2.5rem; z-index: 210;
+        display: flex; flex-direction: column; position: fixed; inset: 0;
+        background: rgba(14,14,14,0.97);
+        align-items: center; justify-content: center; gap: 2.5rem; z-index: 210;
       }
       .nav-links.open a { font-size: 0.9rem; }
       .nav-hamburger { display: flex; }
 
       .strip-header { padding: 0 1.5rem 2rem; }
-      .image-strip  { padding: 0 1.5rem; }
-      .strip-item   { height: 240px; }
-      .strip-item:nth-child(n) { width: 260px; }
+      .c-item { height: 240px; }
+      .c-item:nth-child(n) { width: 260px !important; }
 
       .gallery-grid {
-        padding: 0 1.5rem 4rem;
-        grid-template-columns: 1fr 1fr;
-        grid-auto-rows: 200px;
-        gap: 5px;
+        padding: 0 1.5rem 4rem; grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 200px; gap: 5px;
       }
-
-      /* On mobile collapse all spans to 1, make wide ones span 2 */
       .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; }
       .gi-a, .gi-h, .gi-l { grid-column: span 2 !important; }
 
@@ -769,14 +651,10 @@
       .about-profile-col { position: static; }
       .about-profile-img { aspect-ratio: 16/9; }
 
-      .services-body { padding: 3rem 1.5rem; }
-      .services-teaser { padding: 4rem 1.5rem; }
-      .strip-section, .services-teaser, .featured-as,
-      .contact-section { padding-left: 1.5rem; padding-right: 1.5rem; }
-
+      .services-body, .services-teaser { padding: 3rem 1.5rem; }
+      .featured-as, .contact-section { padding-left: 1.5rem; padding-right: 1.5rem; }
       footer { flex-direction: column; align-items: center; text-align: center; padding: 1.8rem 1.5rem; }
       .footer-copy { flex: unset; }
-
       .featured-as-logos img { height: 52px; }
       .about-featured-logos img { height: 44px; }
     }
@@ -808,14 +686,14 @@
     </button>
   </nav>
 
-  <!-- ══════════════════════════════════════════════
-       HOME PAGE
-  ══════════════════════════════════════════════ -->
+  <!-- ══════════════════ HOME ══════════════════ -->
   <div class="page active" id="page-home">
     <div class="nav-spacer"></div>
 
+    <!-- Hero with rotating background -->
     <section class="hero">
-      <div class="hero-bg"></div>
+      <div class="hero-bg-a" id="hero-bg-a"></div>
+      <div class="hero-bg-b" id="hero-bg-b"></div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <p class="hero-eyebrow">Lake Tekapo, New Zealand</p>
@@ -828,31 +706,26 @@
       </div>
       <span class="watermark" aria-hidden="true">&copy; Merlin Williams Photography</span>
       <div class="hero-scroll" aria-hidden="true">
-        <span>Scroll</span>
-        <div class="scroll-line"></div>
+        <span>Scroll</span><div class="scroll-line"></div>
       </div>
     </section>
 
-    <!-- Image strip teaser -->
+    <!-- Infinity carousel -->
     <div class="strip-section">
       <div class="strip-header">
-        <div class="strip-header-left">
+        <div>
           <p class="section-label">Selected Work</p>
           <h2 class="section-heading">Portfolio</h2>
         </div>
         <button class="strip-cta" onclick="showPage('portfolio')">View all images &rarr;</button>
       </div>
-      <div class="image-strip" id="image-strip">
-        <div class="strip-item"><img src="images/a.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/b.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/c.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/d.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/e.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/f.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/g.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/h.jpg" alt="Astrophotography" loading="lazy" /></div>
-        <div class="strip-item"><img src="images/i.jpg" alt="Astrophotography" loading="lazy" /></div>
+
+      <div class="carousel-outer" id="carousel-outer">
+        <div class="carousel-track" id="carousel-track">
+          <!-- Items injected by JS (duplicated for infinity) -->
+        </div>
       </div>
+
       <div class="strip-view-all">
         <button class="btn-outline" onclick="showPage('portfolio')">View Full Portfolio</button>
       </div>
@@ -905,20 +778,27 @@
       <p class="contact-sub">Open for print orders, commissions, and licensing enquiries</p>
       <a href="mailto:merlin.williams100@gmail.com" class="contact-email">merlin.williams100@gmail.com</a>
       <div class="social-row">
-        <!-- Instagram -->
+        <!-- Instagram — official gradient colours as inline SVG -->
         <a class="social-link" href="https://www.instagram.com/molin.n.n/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4.5"/>
-            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ig-grad" cx="30%" cy="107%" r="150%">
+                <stop offset="0%"   stop-color="#fdf497"/>
+                <stop offset="10%"  stop-color="#fdf497"/>
+                <stop offset="25%"  stop-color="#fd5949"/>
+                <stop offset="49%"  stop-color="#d6249f"/>
+                <stop offset="100%" stop-color="#285AEB"/>
+              </radialGradient>
+            </defs>
+            <rect x="1" y="1" width="22" height="22" rx="6" ry="6" fill="url(#ig-grad)"/>
+            <circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="1.8"/>
+            <circle cx="17.8" cy="6.2" r="1.1" fill="#fff"/>
           </svg>
           Instagram
         </a>
-        <!-- AstroBin -->
+        <!-- AstroBin — uploaded logo -->
         <a class="social-link" href="https://www.astrobin.com/users/molin.n.n/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2a8 8 0 1 1 0 16A8 8 0 0 1 12 4zm0 2a6 6 0 1 0 0 12A6 6 0 0 0 12 6zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-          </svg>
+          <img class="astrobin-icon" src="images/astrobin.webp" alt="AstroBin" />
           AstroBin
         </a>
       </div>
@@ -931,9 +811,7 @@
     </footer>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       PORTFOLIO PAGE
-  ══════════════════════════════════════════════ -->
+  <!-- ══════════════════ PORTFOLIO ══════════════════ -->
   <div class="page" id="page-portfolio">
     <div class="nav-spacer"></div>
     <div class="portfolio-header">
@@ -941,21 +819,21 @@
       <h1 class="section-heading" style="margin-bottom:0">Portfolio</h1>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-item gi-a" data-index="0"><img class="gallery-photo" src="images/a.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Deep Sky</div></div>
-      <div class="gallery-item gi-b" data-index="1"><img class="gallery-photo" src="images/b.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Nebula</div></div>
-      <div class="gallery-item gi-c" data-index="2"><img class="gallery-photo" src="images/c.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Star Field</div></div>
-      <div class="gallery-item gi-d" data-index="3"><img class="gallery-photo" src="images/d.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Galaxy</div></div>
-      <div class="gallery-item gi-e" data-index="4"><img class="gallery-photo" src="images/e.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Wide Field</div></div>
-      <div class="gallery-item gi-f" data-index="5"><img class="gallery-photo" src="images/f.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Milky Way</div></div>
-      <div class="gallery-item gi-g" data-index="6"><img class="gallery-photo" src="images/g.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Southern Sky</div></div>
-      <div class="gallery-item gi-h" data-index="7"><img class="gallery-photo" src="images/h.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Deep Sky</div></div>
-      <div class="gallery-item gi-i" data-index="8"><img class="gallery-photo" src="images/i.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Nebula</div></div>
-      <div class="gallery-item gi-j" data-index="9"><img class="gallery-photo" src="images/j.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Star Cluster</div></div>
-      <div class="gallery-item gi-k" data-index="10"><img class="gallery-photo" src="images/k.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Panorama</div></div>
-      <div class="gallery-item gi-l" data-index="11"><img class="gallery-photo" src="images/l.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Galaxy</div></div>
-      <div class="gallery-item gi-m" data-index="12"><img class="gallery-photo" src="images/m.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Deep Sky</div></div>
-      <div class="gallery-item gi-n" data-index="13"><img class="gallery-photo" src="images/n.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Nebula</div></div>
-      <div class="gallery-item gi-o" data-index="14"><img class="gallery-photo" src="images/o.jpg" alt="Astrophotography" loading="lazy" /><div class="gallery-caption">Southern Sky</div></div>
+      <div class="gallery-item gi-a" data-index="0"><img class="gallery-photo" src="images/a.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Deep Sky</div></div>
+      <div class="gallery-item gi-b" data-index="1"><img class="gallery-photo" src="images/b.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Nebula</div></div>
+      <div class="gallery-item gi-c" data-index="2"><img class="gallery-photo" src="images/c.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Star Field</div></div>
+      <div class="gallery-item gi-d" data-index="3"><img class="gallery-photo" src="images/d.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Galaxy</div></div>
+      <div class="gallery-item gi-e" data-index="4"><img class="gallery-photo" src="images/e.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Wide Field</div></div>
+      <div class="gallery-item gi-f" data-index="5"><img class="gallery-photo" src="images/f.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Milky Way</div></div>
+      <div class="gallery-item gi-g" data-index="6"><img class="gallery-photo" src="images/g.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Southern Sky</div></div>
+      <div class="gallery-item gi-h" data-index="7"><img class="gallery-photo" src="images/h.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Deep Sky</div></div>
+      <div class="gallery-item gi-i" data-index="8"><img class="gallery-photo" src="images/i.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Nebula</div></div>
+      <div class="gallery-item gi-j" data-index="9"><img class="gallery-photo" src="images/j.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Star Cluster</div></div>
+      <div class="gallery-item gi-k" data-index="10"><img class="gallery-photo" src="images/k.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Panorama</div></div>
+      <div class="gallery-item gi-l" data-index="11"><img class="gallery-photo" src="images/l.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Galaxy</div></div>
+      <div class="gallery-item gi-m" data-index="12"><img class="gallery-photo" src="images/m.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Deep Sky</div></div>
+      <div class="gallery-item gi-n" data-index="13"><img class="gallery-photo" src="images/n.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Nebula</div></div>
+      <div class="gallery-item gi-o" data-index="14"><img class="gallery-photo" src="images/o.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Southern Sky</div></div>
     </div>
     <div class="contact-section">
       <p class="section-label">Interested in a print?</p>
@@ -970,9 +848,7 @@
     </footer>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       ABOUT PAGE
-  ══════════════════════════════════════════════ -->
+  <!-- ══════════════════ ABOUT ══════════════════ -->
   <div class="page" id="page-about">
     <div class="nav-spacer"></div>
     <div class="about-hero">
@@ -1015,17 +891,24 @@
       <a href="mailto:merlin.williams100@gmail.com" class="contact-email">merlin.williams100@gmail.com</a>
       <div class="social-row">
         <a class="social-link" href="https://www.instagram.com/molin.n.n/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4.5"/>
-            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          <svg class="social-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="ig-grad2" cx="30%" cy="107%" r="150%">
+                <stop offset="0%"   stop-color="#fdf497"/>
+                <stop offset="10%"  stop-color="#fdf497"/>
+                <stop offset="25%"  stop-color="#fd5949"/>
+                <stop offset="49%"  stop-color="#d6249f"/>
+                <stop offset="100%" stop-color="#285AEB"/>
+              </radialGradient>
+            </defs>
+            <rect x="1" y="1" width="22" height="22" rx="6" ry="6" fill="url(#ig-grad2)"/>
+            <circle cx="12" cy="12" r="5" fill="none" stroke="#fff" stroke-width="1.8"/>
+            <circle cx="17.8" cy="6.2" r="1.1" fill="#fff"/>
           </svg>
           Instagram
         </a>
         <a class="social-link" href="https://www.astrobin.com/users/molin.n.n/" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2a8 8 0 1 1 0 16A8 8 0 0 1 12 4zm0 2a6 6 0 1 0 0 12A6 6 0 0 0 12 6zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
-          </svg>
+          <img class="astrobin-icon" src="images/astrobin.webp" alt="AstroBin" />
           AstroBin
         </a>
       </div>
@@ -1037,9 +920,7 @@
     </footer>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       SERVICES PAGE
-  ══════════════════════════════════════════════ -->
+  <!-- ══════════════════ SERVICES ══════════════════ -->
   <div class="page" id="page-services">
     <div class="nav-spacer"></div>
     <div class="services-hero">
@@ -1086,7 +967,7 @@
     </footer>
   </div>
 
-  <!-- LIGHTBOX -->
+  <!-- LIGHTBOX (portfolio) -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lb-close">Close</button>
     <button class="lightbox-prev" id="lb-prev">&#8592; Prev</button>
@@ -1094,7 +975,13 @@
     <button class="lightbox-next" id="lb-next">Next &#8594;</button>
   </div>
 
+  <!-- PEEK overlay (carousel long-press) -->
+  <div class="peek-overlay" id="peek-overlay">
+    <img id="peek-img" src="" alt="Preview" />
+  </div>
+
   <script>
+    /* ── Shared ───────────────────────────────────── */
     document.querySelectorAll('.year').forEach(el => el.textContent = new Date().getFullYear());
 
     function showPage(name) {
@@ -1111,11 +998,7 @@
 
     const ham  = document.getElementById('hamburger');
     const menu = document.getElementById('nav-links');
-
-    ham.addEventListener('click', () => {
-      ham.classList.toggle('open');
-      menu.classList.toggle('open');
-    });
+    ham.addEventListener('click', () => { ham.classList.toggle('open'); menu.classList.toggle('open'); });
 
     function triggerReveals() {
       const obs = new IntersectionObserver((entries) => {
@@ -1131,35 +1014,211 @@
     }
     triggerReveals();
 
-    /* Drag-to-scroll strip */
-    const strip = document.getElementById('image-strip');
-    let isDragging = false, startX, scrollLeft;
-    strip.addEventListener('mousedown', e => { isDragging = true; strip.classList.add('dragging'); startX = e.pageX - strip.offsetLeft; scrollLeft = strip.scrollLeft; });
-    strip.addEventListener('mouseleave', () => { isDragging = false; strip.classList.remove('dragging'); });
-    strip.addEventListener('mouseup', () => { isDragging = false; strip.classList.remove('dragging'); });
-    strip.addEventListener('mousemove', e => { if (!isDragging) return; e.preventDefault(); strip.scrollLeft = scrollLeft - (e.pageX - strip.offsetLeft - startX) * 1.4; });
+    /* ── Hero rotating background ─────────────────── */
+    const heroBgA = document.getElementById('hero-bg-a');
+    const heroBgB = document.getElementById('hero-bg-b');
+    const heroImages = ['images/a.jpg', 'images/n.jpg', 'images/b.jpg', 'images/k.jpg'];
+    let heroIdx = 0;
 
-    /* Lightbox */
-    const images = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o'].map(x => `images/${x}.jpg`);
+    // Set initial
+    heroBgA.style.backgroundImage = `url('${heroImages[0]}')`;
+
+    setInterval(() => {
+      const next = heroImages[(heroIdx + 1) % heroImages.length];
+      const active   = heroIdx % 2 === 0 ? heroBgA : heroBgB;
+      const incoming = heroIdx % 2 === 0 ? heroBgB : heroBgA;
+
+      incoming.style.backgroundImage = `url('${next}')`;
+      incoming.style.opacity = '1';
+      active.style.opacity   = '0';
+
+      heroIdx = (heroIdx + 1) % heroImages.length;
+    }, 5000);
+
+    /* ── Infinity Carousel ────────────────────────── */
+    // Carousel images — curated selection (not all 15)
+    const carouselSrcs = [
+      'images/a.jpg','images/c.jpg','images/e.jpg',
+      'images/g.jpg','images/i.jpg','images/k.jpg',
+      'images/m.jpg','images/b.jpg','images/f.jpg'
+    ];
+
+    const track = document.getElementById('carousel-track');
+    const outer = document.getElementById('carousel-outer');
+
+    // Build items — triple-duplicate so we always have a seamless loop
+    function makeItem(src) {
+      const div = document.createElement('div');
+      div.className = 'c-item';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = 'Astrophotography';
+      img.loading = 'lazy';
+      img.draggable = false;
+      div.appendChild(img);
+      return div;
+    }
+
+    // Three copies: [...original, ...original, ...original]
+    const allSrcs = [...carouselSrcs, ...carouselSrcs, ...carouselSrcs];
+    allSrcs.forEach(src => track.appendChild(makeItem(src)));
+
+    // After layout: measure one set width, jump track to middle copy
+    let setWidth = 0;
+    let translateX = 0;
+    let speed = 0.45;      // px per frame
+    let animId = null;
+    let paused = false;
+    let resumeTimer = null;
+
+    function computeSetWidth() {
+      const items = track.querySelectorAll('.c-item');
+      const n = carouselSrcs.length;
+      let w = 0;
+      for (let i = 0; i < n; i++) {
+        w += items[i].offsetWidth + 6; // 6 = gap
+      }
+      return w;
+    }
+
+    function startCarousel() {
+      if (animId) return;
+      function step() {
+        if (!paused) {
+          translateX -= speed;
+          // When we've scrolled one full set, jump back silently
+          if (Math.abs(translateX) >= setWidth) {
+            translateX += setWidth;
+            track.classList.add('no-transition');
+            track.style.transform = `translateX(${translateX}px)`;
+            // Force reflow then remove class
+            track.getBoundingClientRect();
+            track.classList.remove('no-transition');
+          } else {
+            track.style.transform = `translateX(${translateX}px)`;
+          }
+        }
+        animId = requestAnimationFrame(step);
+      }
+      animId = requestAnimationFrame(step);
+    }
+
+    function pauseCarousel() {
+      paused = true;
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => { paused = false; }, 5000);
+    }
+
+    // Initialise after fonts/layout settle
+    window.addEventListener('load', () => {
+      setWidth = computeSetWidth();
+      // Start at the beginning of the middle copy
+      translateX = -setWidth;
+      track.style.transform = `translateX(${translateX}px)`;
+      startCarousel();
+    });
+
+    /* ── Peek overlay ─────────────────────────────── */
+    const peekOverlay = document.getElementById('peek-overlay');
+    const peekImg     = document.getElementById('peek-img');
+    let peekOpen = false;
+    let longPressTimer = null;
+    const LONG_PRESS_MS = 400;
+
+    function openPeek(src) {
+      peekImg.src = src;
+      peekOverlay.classList.add('active');
+      peekOpen = true;
+      pauseCarousel();
+    }
+
+    function closePeek() {
+      peekOverlay.classList.remove('active');
+      peekOpen = false;
+      pauseCarousel(); // restarts the 5s resume timer
+    }
+
+    // Close peek on overlay background click (mobile toggle off)
+    peekOverlay.addEventListener('click', e => {
+      if (e.target === peekOverlay || e.target === peekImg) closePeek();
+    });
+
+    // Attach events to carousel items (delegated, re-runs when items are added)
+    function attachCarouselEvents() {
+      track.querySelectorAll('.c-item').forEach(item => {
+        const src = item.querySelector('img').src;
+
+        // ── Desktop: long press (mousedown hold) ──
+        item.addEventListener('mousedown', e => {
+          pauseCarousel();
+          longPressTimer = setTimeout(() => {
+            openPeek(src);
+          }, LONG_PRESS_MS);
+        });
+
+        item.addEventListener('mouseup', e => {
+          clearTimeout(longPressTimer);
+          if (peekOpen) closePeek();
+        });
+
+        item.addEventListener('mouseleave', e => {
+          clearTimeout(longPressTimer);
+          if (peekOpen) closePeek();
+        });
+
+        // ── Mobile: tap to toggle ──
+        item.addEventListener('touchstart', e => {
+          pauseCarousel();
+          longPressTimer = setTimeout(() => {
+            openPeek(src);
+          }, LONG_PRESS_MS);
+        }, { passive: true });
+
+        item.addEventListener('touchend', e => {
+          clearTimeout(longPressTimer);
+          if (!peekOpen) {
+            // Short tap with no peek: treat as toggle open
+            openPeek(src);
+          } else {
+            closePeek();
+          }
+        });
+
+        // Pause on any hover
+        item.addEventListener('mouseenter', () => pauseCarousel());
+      });
+    }
+
+    attachCarouselEvents();
+
+    /* ── Portfolio lightbox ───────────────────────── */
+    const galleryImages = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o']
+      .map(x => `images/${x}.jpg`);
+
     let currentIndex = 0;
     const lightbox = document.getElementById('lightbox');
     const lbImg    = document.getElementById('lb-img');
 
-    function openLightbox(i)  { currentIndex = i; lbImg.src = images[i]; lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function openLightbox(i)  { currentIndex = i; lbImg.src = galleryImages[i]; lightbox.classList.add('active'); document.body.style.overflow = 'hidden'; }
     function closeLightbox()  { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
-    function showPrev()       { currentIndex = (currentIndex - 1 + images.length) % images.length; lbImg.src = images[currentIndex]; }
-    function showNext()       { currentIndex = (currentIndex + 1) % images.length; lbImg.src = images[currentIndex]; }
+    function lbPrev()         { currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length; lbImg.src = galleryImages[currentIndex]; }
+    function lbNext()         { currentIndex = (currentIndex + 1) % galleryImages.length; lbImg.src = galleryImages[currentIndex]; }
 
-    document.querySelectorAll('.gallery-item').forEach(item => item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index))));
+    document.querySelectorAll('.gallery-item').forEach(item =>
+      item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)))
+    );
+
     document.getElementById('lb-close').addEventListener('click', closeLightbox);
-    document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); showPrev(); });
-    document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); showNext(); });
+    document.getElementById('lb-prev').addEventListener('click', e => { e.stopPropagation(); lbPrev(); });
+    document.getElementById('lb-next').addEventListener('click', e => { e.stopPropagation(); lbNext(); });
     lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
     document.addEventListener('keydown', e => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'ArrowLeft') showPrev();
-      if (e.key === 'ArrowRight') showNext();
-      if (e.key === 'Escape') closeLightbox();
+      if (lightbox.classList.contains('active')) {
+        if (e.key === 'ArrowLeft') lbPrev();
+        if (e.key === 'ArrowRight') lbNext();
+        if (e.key === 'Escape') closeLightbox();
+      }
     });
   </script>
 </body>
