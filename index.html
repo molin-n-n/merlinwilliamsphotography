@@ -642,14 +642,16 @@
       .nav-links { display: none; }
       .nav-links.open {
         display: flex; flex-direction: column; position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
+        top: 0; left: 0; right: 0;
+        height: 100dvh; /* dynamic viewport height — stays inside visible browser chrome */
         background: rgba(14,14,14,0.98);
         align-items: center; justify-content: center;
         gap: 3rem; z-index: 210;
-        padding: 0; /* no top padding — centred by justify-content */
+        padding-top: env(safe-area-inset-top, 0px);
+        overflow-y: auto;
       }
       .nav-links.open a {
-        font-size: 1.05rem; letter-spacing: 0.22em; color: var(--g1);
+        font-size: 1.1rem; letter-spacing: 0.22em; color: var(--g1);
       }
       .nav-hamburger { display: flex; }
 
@@ -1140,7 +1142,7 @@
         // Reset currentSpeed to 0 so it eases back in smoothly
         currentSpeed = 0;
         paused = false;
-      }, 5000);
+      }, 3000);
     }
 
     window.addEventListener('load', () => {
@@ -1154,8 +1156,6 @@
     const peekOverlay = document.getElementById('peek-overlay');
     const peekImg     = document.getElementById('peek-img');
     let peekOpen = false;
-    let longPressTimer = null;
-    const LONG_PRESS_MS = 400;
 
     function openPeek(src) {
       peekImg.src = src;
@@ -1175,49 +1175,20 @@
       if (e.target === peekOverlay || e.target === peekImg) closePeek();
     });
 
-    // Attach events to carousel items (delegated, re-runs when items are added)
+    // Attach events to carousel items
     function attachCarouselEvents() {
       track.querySelectorAll('.c-item').forEach(item => {
         const src = item.querySelector('img').src;
 
-        // ── Desktop: long press ──
-        item.addEventListener('mousedown', e => {
-          e.preventDefault(); // stops browser text-selection on first press
-          pauseCarousel();
-          longPressTimer = setTimeout(() => {
-            openPeek(src);
-          }, LONG_PRESS_MS);
-        });
-
-        item.addEventListener('mouseup', e => {
-          clearTimeout(longPressTimer);
-          if (peekOpen) closePeek();
-        });
-
-        item.addEventListener('mouseleave', e => {
-          clearTimeout(longPressTimer);
-          if (peekOpen) closePeek();
-          // No pauseCarousel on mouseleave — hover does not pause
-        });
-
-        // ── Mobile: tap toggles peek ──
-        item.addEventListener('touchstart', e => {
-          pauseCarousel();
-          longPressTimer = setTimeout(() => {
-            openPeek(src);
-          }, LONG_PRESS_MS);
-        }, { passive: true });
-
-        item.addEventListener('touchend', e => {
-          clearTimeout(longPressTimer);
-          if (!peekOpen) {
-            openPeek(src);
-          } else {
+        // Single click/tap toggles peek open or closed — same behaviour on desktop and mobile
+        item.addEventListener('click', e => {
+          e.preventDefault();
+          if (peekOpen) {
             closePeek();
+          } else {
+            openPeek(src);
           }
         });
-
-        // Hover brightens image only — does NOT pause carousel
       });
     }
 
