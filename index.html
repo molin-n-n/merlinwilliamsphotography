@@ -7,7 +7,7 @@
   <link rel="icon" type="image/jpeg" href="images/profile.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,7 +60,7 @@
     }
 
     .nav-logo {
-      font-family: 'DM Serif Display', Georgia, serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 1rem; font-weight: 500; letter-spacing: 0.04em; color: var(--w2);
     }
 
@@ -93,7 +93,8 @@
 
     /* ── HERO ─────────────────────────────────────── */
     .hero {
-      position: relative; height: calc(100vh - 65px); min-height: 540px;
+      position: relative; height: 100vh; min-height: 600px;
+      margin-top: -65px; /* pull up behind the fixed nav */
       display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
 
@@ -121,8 +122,9 @@
     }
 
     .hero-title {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 500; line-height: 1.08;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem); font-weight: 600; line-height: 1.02;
+      letter-spacing: 0.03em; text-transform: uppercase;
       color: var(--w2); margin-bottom: 1.4rem;
       opacity: 0; animation: fadeUp 0.9s 0.45s forwards;
     }
@@ -173,9 +175,10 @@
     }
 
     .section-heading {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 500;
-      color: var(--w2); line-height: 1.2; margin-bottom: 3rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem); font-weight: 600;
+      letter-spacing: 0.03em; text-transform: uppercase;
+      color: var(--w2); line-height: 1.05; margin-bottom: 3rem;
     }
 
     /* ── INFINITY CAROUSEL ────────────────────────── */
@@ -277,14 +280,14 @@
     .st-card:hover { background: var(--bg2); }
 
     .st-num {
-      font-family: 'DM Serif Display', Georgia, serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.6rem; font-weight: 400;
       color: rgba(255,255,255,0.07); margin-bottom: 1.2rem;
     }
 
     .st-title {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 1.1rem; font-weight: 500; color: var(--w2); margin-bottom: 0.6rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--w2); margin-bottom: 0.6rem;
     }
 
     .st-desc { font-size: 0.82rem; font-weight: 300; line-height: 1.75; color: var(--g2); }
@@ -318,12 +321,12 @@
       padding: 6rem 3rem; border-top: 1px solid var(--border); text-align: center;
     }
 
-    .contact-section .section-heading { font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 0.7rem; }
+    .contact-section .section-heading { font-size: clamp(2.4rem, 4.5vw, 4rem); margin-bottom: 0.7rem; }
 
     .contact-sub { font-size: 0.72rem; letter-spacing: 0.12em; color: var(--g3); margin-bottom: 3rem; }
 
     .contact-email {
-      font-family: 'DM Serif Display', Georgia, serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(1.1rem, 2.2vw, 1.8rem); font-weight: 400; color: var(--g1);
       text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18);
       padding-bottom: 0.2rem; transition: color 0.2s, border-color 0.2s;
@@ -359,8 +362,8 @@
     }
 
     .footer-logo {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.2);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2);
     }
 
     .footer-copy {
@@ -457,8 +460,8 @@
     }
 
     .about-hero-content h1 {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 500; color: var(--w2);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--w2);
     }
 
     .about-body-wrap {
@@ -474,8 +477,8 @@
     }
 
     .about-profile-name {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 1.3rem; font-weight: 500; color: var(--w2); margin-bottom: 0.3rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.5rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--w2); margin-bottom: 0.3rem;
     }
 
     .about-profile-loc {
@@ -516,8 +519,8 @@
     }
 
     .stat-num {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 2.2rem; font-weight: 400; color: var(--w2); line-height: 1;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.4rem; font-weight: 600; color: var(--w2); line-height: 1;
     }
 
     .stat-label {
@@ -546,8 +549,8 @@
     }
 
     .services-hero-content h1 {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 500; color: var(--w2);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--w2);
     }
 
     .services-body { padding: 5rem 3rem; }
@@ -565,14 +568,14 @@
     .service-card:hover { background: var(--bg2); }
 
     .service-num {
-      font-family: 'DM Serif Display', Georgia, serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 1.8rem; font-weight: 400;
       color: rgba(255,255,255,0.07); margin-bottom: 1.5rem; line-height: 1;
     }
 
     .service-title {
-      font-family: 'DM Serif Display', Georgia, serif;
-      font-size: 1.2rem; font-weight: 500; color: var(--w2); margin-bottom: 0.9rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--w2); margin-bottom: 0.9rem;
     }
 
     .service-desc { font-size: 0.85rem; font-weight: 300; line-height: 1.8; color: var(--g2); }
