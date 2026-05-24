@@ -7,7 +7,7 @@
   <link rel="icon" type="image/jpeg" href="images/profile.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -43,9 +43,10 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.1rem 3rem;
-      background: rgba(20,20,20,0.95);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(20,20,20,0.80);
+      backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 1px 24px 0 rgba(0,0,0,0.35);
     }
 
     .nav-left {
@@ -59,7 +60,7 @@
     }
 
     .nav-logo {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 1rem; font-weight: 500; letter-spacing: 0.04em; color: var(--w2);
     }
 
@@ -120,7 +121,7 @@
     }
 
     .hero-title {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(2.8rem, 7vw, 6rem); font-weight: 500; line-height: 1.08;
       color: var(--w2); margin-bottom: 1.4rem;
       opacity: 0; animation: fadeUp 0.9s 0.45s forwards;
@@ -172,7 +173,7 @@
     }
 
     .section-heading {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 500;
       color: var(--w2); line-height: 1.2; margin-bottom: 3rem;
     }
@@ -276,13 +277,13 @@
     .st-card:hover { background: var(--bg2); }
 
     .st-num {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 1.6rem; font-weight: 400;
       color: rgba(255,255,255,0.07); margin-bottom: 1.2rem;
     }
 
     .st-title {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 1.1rem; font-weight: 500; color: var(--w2); margin-bottom: 0.6rem;
     }
 
@@ -322,7 +323,7 @@
     .contact-sub { font-size: 0.72rem; letter-spacing: 0.12em; color: var(--g3); margin-bottom: 3rem; }
 
     .contact-email {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(1.1rem, 2.2vw, 1.8rem); font-weight: 400; color: var(--g1);
       text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18);
       padding-bottom: 0.2rem; transition: color 0.2s, border-color 0.2s;
@@ -358,7 +359,7 @@
     }
 
     .footer-logo {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.2);
     }
 
@@ -437,9 +438,9 @@
     /* ═══════════════════════════════════════════════
        ABOUT PAGE
     ═══════════════════════════════════════════════ */
-    #page-about { background: var(--bg); padding-top: 65px; }
+    #page-about { background: var(--bg); }
 
-    .about-hero { position: relative; height: 55vh; min-height: 320px; overflow: hidden; }
+    .about-hero { position: relative; height: 55vh; min-height: 320px; overflow: hidden; margin-top: -65px; padding-top: 65px; }
 
     .about-hero-bg {
       position: absolute; inset: 0;
@@ -456,7 +457,7 @@
     }
 
     .about-hero-content h1 {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 500; color: var(--w2);
     }
 
@@ -473,7 +474,7 @@
     }
 
     .about-profile-name {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 1.3rem; font-weight: 500; color: var(--w2); margin-bottom: 0.3rem;
     }
 
@@ -515,7 +516,7 @@
     }
 
     .stat-num {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 2.2rem; font-weight: 400; color: var(--w2); line-height: 1;
     }
 
@@ -527,9 +528,9 @@
     /* ═══════════════════════════════════════════════
        SERVICES PAGE
     ═══════════════════════════════════════════════ */
-    #page-services { background: var(--bg); padding-top: 65px; }
+    #page-services { background: var(--bg); }
 
-    .services-hero { position: relative; height: 50vh; min-height: 280px; overflow: hidden; }
+    .services-hero { position: relative; height: 50vh; min-height: 280px; overflow: hidden; margin-top: -65px; padding-top: 65px; }
 
     .services-hero-bg {
       position: absolute; inset: 0; background-image: url('images/h.jpg');
@@ -545,7 +546,7 @@
     }
 
     .services-hero-content h1 {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: clamp(2.4rem, 5vw, 4.5rem); font-weight: 500; color: var(--w2);
     }
 
@@ -564,13 +565,13 @@
     .service-card:hover { background: var(--bg2); }
 
     .service-num {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 1.8rem; font-weight: 400;
       color: rgba(255,255,255,0.07); margin-bottom: 1.5rem; line-height: 1;
     }
 
     .service-title {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'DM Serif Display', Georgia, serif;
       font-size: 1.2rem; font-weight: 500; color: var(--w2); margin-bottom: 0.9rem;
     }
 
@@ -760,22 +761,22 @@
         <div class="st-card">
           <div class="st-num">01</div>
           <h3 class="st-title">Fine Art Prints</h3>
-          <p class="st-desc">High quality prints of my work, available on request.</p>
+          <p class="st-desc">High quality prints of my work on photo satin or metal, available upon request.</p>
         </div>
         <div class="st-card">
           <div class="st-num">02</div>
           <h3 class="st-title">Editorial Licensing</h3>
-          <p class="st-desc">High-resolution images for books, magazines, and documentaries.</p>
+          <p class="st-desc">High-resolution images licensed for books, magazines, documentaries, and digital publications.</p>
         </div>
         <div class="st-card">
           <div class="st-num">03</div>
           <h3 class="st-title">Night Sky Shoots</h3>
-          <p class="st-desc">Custom night sky photography sessions around the Lake Tekapo area — perfect for portraits, proposals, or personal keepsakes under the stars.</p>
+          <p class="st-desc">Custom night sky photography sessions around the Lake Tekapo area. Whether it's a portrait or a personal keepsake under the stars, get in touch and we'll make it happen.</p>
         </div>
         <div class="st-card">
           <div class="st-num">04</div>
           <h3 class="st-title">Commissions</h3>
-          <p class="st-desc">Custom deep-sky projects and scientific outreach collaborations.</p>
+          <p class="st-desc">Custom deep-sky or nightscape imaging projects- specific targets, time-lapses, or compositions.</p>
         </div>
       </div>
       <div class="services-teaser-footer">
@@ -871,7 +872,6 @@
 
   <!-- ══════════════════ ABOUT ══════════════════ -->
   <div class="page" id="page-about">
-    <div class="nav-spacer"></div>
     <div class="about-hero">
       <div class="about-hero-bg"></div>
       <div class="about-hero-overlay"></div>
@@ -943,7 +943,6 @@
 
   <!-- ══════════════════ SERVICES ══════════════════ -->
   <div class="page" id="page-services">
-    <div class="nav-spacer"></div>
     <div class="services-hero">
       <div class="services-hero-bg"></div>
       <div class="services-hero-overlay"></div>
