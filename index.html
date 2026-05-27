@@ -1184,8 +1184,7 @@
     // After layout: measure one set width, jump track to middle copy
     let setWidth = 0;
     let translateX = 0;
-    let speed = 0.25;        // ~half previous speed of 0.45
-    let currentSpeed = 0.25; // actual speed (eases up from 0 on resume)
+    let speed = 0.45;
     let animId = null;
     let paused = false;
     let resumeTimer = null;
@@ -1204,9 +1203,7 @@
       if (animId) return;
       function step() {
         if (!paused) {
-          // Ease currentSpeed toward target speed smoothly
-          currentSpeed += (speed - currentSpeed) * 0.035;
-          translateX -= currentSpeed;
+          translateX -= speed;
           if (Math.abs(translateX) >= setWidth) {
             translateX += setWidth;
             track.classList.add('no-transition');
@@ -1214,13 +1211,6 @@
             track.getBoundingClientRect();
             track.classList.remove('no-transition');
           } else {
-            track.style.transform = `translateX(${translateX}px)`;
-          }
-        } else {
-          // While paused, decay speed toward 0 for smooth stop
-          currentSpeed *= 0.85;
-          if (currentSpeed > 0.01) {
-            translateX -= currentSpeed;
             track.style.transform = `translateX(${translateX}px)`;
           }
         }
@@ -1232,11 +1222,7 @@
     function pauseCarousel() {
       paused = true;
       clearTimeout(resumeTimer);
-      resumeTimer = setTimeout(() => {
-        // Reset currentSpeed to 0 so it eases back in smoothly
-        currentSpeed = 0;
-        paused = false;
-      }, 3000);
+      resumeTimer = setTimeout(() => { paused = false; }, 3000);
     }
 
     window.addEventListener('load', () => {
