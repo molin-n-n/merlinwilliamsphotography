@@ -220,17 +220,6 @@
       filter: brightness(1);
     }
 
-    /* Format badge (e.g. "Photo Satin" / "Metal") */
-    .print-badge {
-      position: absolute; bottom: 0.8rem; left: 0.8rem;
-      font-size: 0.55rem; font-weight: 400; letter-spacing: 0.18em;
-      text-transform: uppercase; color: rgba(255,255,255,0.6);
-      background: rgba(10,10,10,0.65);
-      padding: 0.25rem 0.6rem;
-      backdrop-filter: blur(4px);
-      pointer-events: none;
-    }
-
     .print-card-body {
       padding: 1.2rem 1.4rem 1.4rem;
       display: flex; flex-direction: column; gap: 0.5rem; flex: 1;
@@ -241,11 +230,6 @@
       font-size: 1.05rem; font-weight: 600;
       letter-spacing: 0.04em; text-transform: uppercase;
       color: var(--w2); line-height: 1.1;
-    }
-
-    .print-size {
-      font-size: 0.7rem; font-weight: 300;
-      letter-spacing: 0.1em; color: var(--g3);
     }
 
     .print-footer {
@@ -390,18 +374,15 @@
     <div class="prints-hero-content">
       <p class="section-label">Merlin Williams Photography</p>
       <h1>Prints</h1>
-      <p>Limited edition fine art prints on photo satin and metal. Each print is individually reviewed and signed.</p>
+      <p>Fine art satin prints of my work. Available in A2 and A3.</p>
     </div>
   </div>
 
   <!-- ── FILTER BAR ────────────────────────────────────── -->
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="satin">Photo Satin</button>
-    <button class="filter-btn" data-filter="metal">Metal</button>
-    <button class="filter-btn" data-filter="milkyway">Milky Way</button>
-    <button class="filter-btn" data-filter="nebula">Nebula</button>
-    <button class="filter-btn" data-filter="landscape">Landscape</button>
+    <button class="filter-btn" data-filter="nightscape">Nightscape</button>
+    <button class="filter-btn" data-filter="deepspace">Deep Space</button>
   </div>
 
   <!-- ── PRINTS GRID ───────────────────────────────────── -->
@@ -409,127 +390,67 @@
     <div class="prints-grid" id="prints-grid">
 
       <!--
-      ╔═══════════════════════════════════════════════════════════════╗
-      ║  HOW TO ADD / EDIT A PRINT CARD                              ║
-      ║                                                               ║
-      ║  1. Copy one .print-card block below                          ║
-      ║  2. Replace the background-image URL with your photo          ║
-      ║  3. Update title, size, price                                 ║
-      ║  4. Replace href="YOUR_SHOPIFY_CHECKOUT_URL" with the link    ║
-      ║     from your Shopify product (see notes at bottom of file)   ║
-      ║  5. Set data-category to one of:                              ║
-      ║     all | satin | metal | milkyway | nebula | landscape        ║
-      ║  6. For sold-out items add class="buy-btn sold-out"           ║
-      ╚═══════════════════════════════════════════════════════════════╝
+      ╔══════════════════════════════════════════════════════════════╗
+      ║  HOW TO ADD A PRINT                                          ║
+      ║  1. Copy a .print-card block                                 ║
+      ║  2. Update image URL, title, data-category                   ║
+      ║  3. Replace href with your Shopify product page URL          ║
+      ║     e.g. https://merlin-williams-prints.myshopify.com/       ║
+      ║          products/your-product-handle                        ║
+      ╚══════════════════════════════════════════════════════════════╝
       -->
 
-      <!-- PRINT 1 -->
-      <div class="print-card" data-category="milkyway satin">
+      <!-- PRINT A — Milky Way arching over Tasman Lake (nightscape) -->
+      <div class="print-card" data-category="nightscape">
         <div class="print-card-img">
           <div class="print-card-img-inner" style="background-image: url('images/a.jpg')"></div>
-          <span class="print-badge">Photo Satin</span>
         </div>
         <div class="print-card-body">
           <div class="print-title">Milky Way arching over Tasman Lake</div>
-          <div class="print-size">60 × 40 cm &nbsp;·&nbsp; Photo Satin</div>
           <div class="print-footer">
-            <span class="print-price">NZD $180</span>
-            <!-- ▼ Replace href with your Shopify checkout URL for this product -->
-            <a class="buy-btn" href="YOUR_SHOPIFY_CHECKOUT_URL" target="_blank" rel="noopener">Buy Print</a>
+            <span class="print-price">From $100 NZD</span>
+            <!-- ▼ Add your Shopify product URL here when ready -->
+            <a class="buy-btn" href="YOUR_SHOPIFY_PRODUCT_URL" target="_blank" rel="noopener">Buy Print</a>
           </div>
         </div>
       </div>
 
-      <!-- PRINT 2 -->
-      <div class="print-card" data-category="nebula metal">
+      <!-- PRINT B — Valley Milky Way Rising (nightscape) — linked to Shopify -->
+      <div class="print-card" data-category="nightscape">
         <div class="print-card-img">
           <div class="print-card-img-inner" style="background-image: url('images/b.jpg')"></div>
-          <span class="print-badge">Metal</span>
         </div>
         <div class="print-card-body">
-          <div class="print-title">Rising Milky Way</div>
-          <div class="print-size">60 × 40 cm &nbsp;·&nbsp; Chromaluxe Metal</div>
+          <div class="print-title">Valley Milky Way Rising</div>
           <div class="print-footer">
-            <span class="print-price">NZD $240</span>
-            <!-- ▼ Replace href with your Shopify checkout URL for this product -->
-            <a class="buy-btn" href="YOUR_SHOPIFY_CHECKOUT_URL" target="_blank" rel="noopener">Buy Print</a>
+            <span class="print-price">From $100 NZD</span>
+            <!--
+              ▼ SHOPIFY LINK — currently pointing to your product page.
+                To send directly to checkout, get the variant ID from
+                Shopify admin and replace with:
+                https://merlin-williams-prints.myshopify.com/cart/VARIANT_ID:1
+            -->
+            <a class="buy-btn" href="https://merlin-williams-prints.myshopify.com/products/valley-milky-way-rising/" target="_blank" rel="noopener">Buy Print</a>
           </div>
         </div>
       </div>
 
-      <!-- PRINT 3 -->
-      <div class="print-card" data-category="nebula satin">
-        <div class="print-card-img">
-          <div class="print-card-img-inner" style="background-image: url('images/e.jpg')"></div>
-          <span class="print-badge">Photo Satin</span>
-        </div>
-        <div class="print-card-body">
-          <div class="print-title">Large Magellanic Cloud</div>
-          <div class="print-size">80 × 53 cm &nbsp;·&nbsp; Photo Satin</div>
-          <div class="print-footer">
-            <span class="print-price">NZD $220</span>
-            <!-- ▼ Replace href with your Shopify checkout URL for this product -->
-            <a class="buy-btn" href="YOUR_SHOPIFY_CHECKOUT_URL" target="_blank" rel="noopener">Buy Print</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRINT 4 -->
-      <div class="print-card" data-category="landscape metal">
-        <div class="print-card-img">
-          <div class="print-card-img-inner" style="background-image: url('images/h.jpg')"></div>
-          <span class="print-badge">Metal</span>
-        </div>
-        <div class="print-card-body">
-          <div class="print-title">South beyond an Observatory</div>
-          <div class="print-size">90 × 60 cm &nbsp;·&nbsp; Chromaluxe Metal</div>
-          <div class="print-footer">
-            <span class="print-price">NZD $320</span>
-            <!-- ▼ Replace href with your Shopify checkout URL for this product -->
-            <a class="buy-btn" href="YOUR_SHOPIFY_CHECKOUT_URL" target="_blank" rel="noopener">Buy Print</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRINT 5 -->
-      <div class="print-card" data-category="milkyway satin">
+      <!-- PRINT K — Rho Ophiuchi (deep space) -->
+      <div class="print-card" data-category="deepspace">
         <div class="print-card-img">
           <div class="print-card-img-inner" style="background-image: url('images/k.jpg')"></div>
-          <span class="print-badge">Photo Satin</span>
         </div>
         <div class="print-card-body">
-          <div class="print-title">Summer Arch above Tasman Valley</div>
-          <div class="print-size">60 × 40 cm &nbsp;·&nbsp; Photo Satin</div>
+          <div class="print-title">Rho Ophiuchi</div>
           <div class="print-footer">
-            <span class="print-price">NZD $180</span>
-            <!-- ▼ Replace href with your Shopify checkout URL for this product -->
-            <a class="buy-btn" href="YOUR_SHOPIFY_CHECKOUT_URL" target="_blank" rel="noopener">Buy Print</a>
+            <span class="print-price">From $100 NZD</span>
+            <!-- ▼ Add your Shopify product URL here when ready -->
+            <a class="buy-btn" href="YOUR_SHOPIFY_PRODUCT_URL" target="_blank" rel="noopener">Buy Print</a>
           </div>
         </div>
       </div>
 
-      <!-- PRINT 6 -->
-      <div class="print-card" data-category="nebula metal">
-        <div class="print-card-img">
-          <div class="print-card-img-inner" style="background-image: url('images/p.jpg')"></div>
-          <span class="print-badge">Metal</span>
-        </div>
-        <div class="print-card-body">
-          <div class="print-title">Interstellar Dust Cloud</div>
-          <div class="print-size">80 × 53 cm &nbsp;·&nbsp; Chromaluxe Metal</div>
-          <div class="print-footer">
-            <span class="print-price">NZD $280</span>
-            <!-- ▼ Replace href with your Shopify checkout URL for this product -->
-            <a class="buy-btn" href="YOUR_SHOPIFY_CHECKOUT_URL" target="_blank" rel="noopener">Buy Print</a>
-          </div>
-        </div>
-      </div>
-
-      <!--
-        ── ADD MORE PRINTS BELOW THIS LINE ──────────────────────────
-        Copy the block above, update image/title/price/checkout URL.
-        You can scale to 50+ prints — the grid handles it automatically.
-      -->
+      <!-- ADD MORE PRINTS BELOW — copy a block above, update image/title/category/href -->
 
     </div>
   </section>
@@ -584,38 +505,6 @@
     });
   </script>
 
-  <!--
-  ╔══════════════════════════════════════════════════════════════════╗
-  ║  SHOPIFY INTEGRATION NOTES                                       ║
-  ║                                                                  ║
-  ║  OPTION A — Direct checkout links (recommended, simplest)        ║
-  ║  ─────────────────────────────────────────────────────────────   ║
-  ║  1. In Shopify admin, create a product for each print            ║
-  ║  2. Open the product, click "More actions" → "View"              ║
-  ║  3. On the product page, click "Buy now" — copy that URL         ║
-  ║     It looks like:                                               ║
-  ║     https://your-store.myshopify.com/cart/VARIANT_ID:1           ║
-  ║  4. Paste it into the href="YOUR_SHOPIFY_CHECKOUT_URL"           ║
-  ║     on the matching .buy-btn anchor tag above                    ║
-  ║                                                                  ║
-  ║  OPTION B — Shopify Buy Button embed (more features)             ║
-  ║  ─────────────────────────────────────────────────────────────   ║
-  ║  1. In Shopify admin → Sales Channels → Buy Button               ║
-  ║  2. Create a Buy Button for each product                         ║
-  ║  3. Customise colours to match dark theme (transparent bg)       ║
-  ║  4. Copy the generated <script> embed snippet                    ║
-  ║  5. Replace the <a class="buy-btn"...> anchor with the snippet   ║
-  ║     (place the script tag just before </body> once,              ║
-  ║      and the div placeholder where the button should appear)     ║
-  ║                                                                  ║
-  ║  LINKING FROM INDEX.HTML                                         ║
-  ║  ─────────────────────────────────────────────────────────────   ║
-  ║  In your index.html nav, add:                                    ║
-  ║    <li><a href="prints.html">Prints</a></li>                     ║
-  ║  and in any services or contact sections add:                    ║
-  ║    <a href="prints.html" class="btn-outline">Shop Prints</a>     ║
-  ╚══════════════════════════════════════════════════════════════════╝
-  -->
 
 </body>
 </html>
