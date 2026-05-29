@@ -61,8 +61,58 @@
 
     .nav-logo {
       font-family: 'Dancing Script', cursive;
-      font-size: 1.5rem; font-weight: 600;
-      color: var(--w2); text-decoration: none;
+      font-size: 1.5rem; font-weight: 600; letter-spacing: 0.01em;
+      text-transform: none; color: var(--w2);
+      display: flex; align-items: baseline; gap: 0;
+      white-space: nowrap; overflow: hidden;
+    }
+
+    .nav-logo .word-merlin,
+    .nav-logo .word-williams {
+      display: inline-block;
+      transition:
+        opacity 0.9s ease,
+        transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-logo .word-photo {
+      display: inline-block;
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition:
+        max-width 1.1s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.6s ease 0.15s;
+    }
+
+    .nav-logo .gap-left,
+    .nav-logo .gap-right {
+      display: inline-block;
+      width: 0.22em;
+      transition: width 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-left:hover .word-merlin {
+      opacity: 0.15;
+      transform: translateX(-8px);
+    }
+
+    .nav-left:hover .word-williams {
+      opacity: 0.15;
+      transform: translateX(8px);
+    }
+
+    .nav-left:hover .word-photo {
+      max-width: 14ch;
+      opacity: 1;
+    }
+
+    .nav-left:hover .gap-left,
+    .nav-left:hover .gap-right {
+      width: 0.55em;
     }
 
     .nav-links { display: flex; gap: 2.8rem; list-style: none; }
@@ -89,7 +139,6 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* Mobile menu */
     @media (max-width: 960px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { display: none; }
@@ -104,6 +153,7 @@
       }
       .nav-links.open a { font-size: 1.1rem; letter-spacing: 0.22em; color: var(--g1); }
       .nav-hamburger { display: flex; }
+      .nav-logo { font-size: 1.25rem; }
       .nav-logo { font-size: 1.25rem; }
     }
 
@@ -345,6 +395,36 @@
     @media (max-width: 560px) {
       .prints-grid { grid-template-columns: 1fr; }
     }
+    /* ── SOLD OUT STATE ──────────────────────────────── */
+    .stock-status {
+      font-size: 0.62rem; font-weight: 400; letter-spacing: 0.16em;
+      text-transform: uppercase; margin-top: 0.5rem;
+      display: none; /* shown by JS when sold out */
+    }
+
+    .stock-status.sold-out {
+      display: block;
+      color: #c0392b;
+    }
+
+    .stock-status.low-stock {
+      display: block;
+      color: #c8a040;
+    }
+
+    .buy-btn.sold-out {
+      opacity: 0.3;
+      pointer-events: none;
+      cursor: default;
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    /* Loading shimmer on buy button while checking stock */
+    .buy-btn.checking {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
   </style>
 </head>
 <body>
@@ -353,7 +433,9 @@
   <nav>
     <a class="nav-left" href="index.html">
       <img class="nav-avatar" src="images/profile.jpg" alt="Merlin Williams" />
-      <span class="nav-logo">Merlin Williams</span>
+      <span class="nav-logo">
+        <span class="word-merlin">Merlin</span><span class="gap-left"></span><span class="word-photo">Photography</span><span class="gap-right"></span><span class="word-williams">Williams</span>
+      </span>
     </a>
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -401,7 +483,7 @@
       -->
 
       <!-- PRINT A — Milky Way arching over Tasman Lake (nightscape) -->
-      <div class="print-card" data-category="nightscape">
+      <div class="print-card" data-category="nightscape" data-shopify-handle="milky-way-arching-over-tasman-lake">
         <div class="print-card-img">
           <div class="print-card-img-inner" style="background-image: url('images/a.jpg')"></div>
         </div>
@@ -409,14 +491,14 @@
           <div class="print-title">Milky Way arching over Tasman Lake</div>
           <div class="print-footer">
             <span class="print-price">From $200 NZD</span>
-            <!-- ▼ Add your Shopify product URL here when ready -->
             <a class="buy-btn" href="https://merlin-williams-prints.myshopify.com/products/milky-way-arching-over-tasman-lake/" target="_blank" rel="noopener">Buy Print</a>
           </div>
+          <div class="stock-status" id="stock-milky-way-arching-over-tasman-lake"></div>
         </div>
       </div>
 
-      <!-- PRINT B — Valley Milky Way Rising (nightscape) — linked to Shopify -->
-      <div class="print-card" data-category="nightscape">
+      <!-- PRINT B — Valley Milky Way Rising (nightscape) -->
+      <div class="print-card" data-category="nightscape" data-shopify-handle="valley-milky-way-rising">
         <div class="print-card-img">
           <div class="print-card-img-inner" style="background-image: url('images/b.jpg')"></div>
         </div>
@@ -424,19 +506,14 @@
           <div class="print-title">Valley Milky Way Rising</div>
           <div class="print-footer">
             <span class="print-price">From $200 NZD</span>
-            <!--
-              ▼ SHOPIFY LINK — currently pointing to your product page.
-                To send directly to checkout, get the variant ID from
-                Shopify admin and replace with:
-                https://merlin-williams-prints.myshopify.com/cart/VARIANT_ID:1
-            -->
             <a class="buy-btn" href="https://merlin-williams-prints.myshopify.com/products/valley-milky-way-rising/" target="_blank" rel="noopener">Buy Print</a>
           </div>
+          <div class="stock-status" id="stock-valley-milky-way-rising"></div>
         </div>
       </div>
 
       <!-- PRINT M — Stars in a Storm (nightscape) -->
-      <div class="print-card" data-category="nightscape">
+      <div class="print-card" data-category="nightscape" data-shopify-handle="stars-in-a-storm">
         <div class="print-card-img">
           <div class="print-card-img-inner" style="background-image: url('images/m.jpg')"></div>
         </div>
@@ -444,14 +521,14 @@
           <div class="print-title">Stars in a Storm</div>
           <div class="print-footer">
             <span class="print-price">From $200 NZD</span>
-            <!-- ▼ Add your Shopify product URL here when ready -->
-            <a class="buy-btn" href="https://merlin-williams-prints.myshopify.com/products/stars-in-a-storm" target="_blank" rel="noopener">Buy Print</a>
+            <a class="buy-btn" href="https://merlin-williams-prints.myshopify.com/products/stars-in-a-storm/" target="_blank" rel="noopener">Buy Print</a>
           </div>
+          <div class="stock-status" id="stock-stars-in-a-storm"></div>
         </div>
       </div>
 
       <!-- PRINT K — Rho Ophiuchi (deep space) -->
-      <div class="print-card" data-category="deepspace">
+      <div class="print-card" data-category="deepspace" data-shopify-handle="rho-ophiuchi">
         <div class="print-card-img">
           <div class="print-card-img-inner" style="background-image: url('images/k.jpg')"></div>
         </div>
@@ -459,9 +536,9 @@
           <div class="print-title">Rho Ophiuchi</div>
           <div class="print-footer">
             <span class="print-price">From $200 NZD</span>
-            <!-- ▼ Add your Shopify product URL here when ready -->
             <a class="buy-btn" href="https://merlin-williams-prints.myshopify.com/products/rho-ophiuchi/" target="_blank" rel="noopener">Buy Print</a>
           </div>
+          <div class="stock-status" id="stock-rho-ophiuchi"></div>
         </div>
       </div>
 
@@ -509,7 +586,6 @@
       btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
         const filter = btn.dataset.filter;
         cards.forEach(card => {
           const cats = card.dataset.category || '';
@@ -518,6 +594,77 @@
         });
       });
     });
+
+    /* ── Stock checker via Shopify product JSON endpoint ─
+     *
+     *  Shopify exposes a public endpoint (no API key needed):
+     *  https://your-store.myshopify.com/products/HANDLE.js
+     *
+     *  It returns product JSON including each variant's
+     *  "available" boolean. We fetch this for every card
+     *  that has a data-shopify-handle attribute, then:
+     *    - if ALL variants unavailable → show "Sold Out" in red
+     *    - if only some variants unavailable → show "Limited stock" in amber
+     *    - if all available → show nothing
+     *
+     *  No API key, no backend, no CORS issues — Shopify serves
+     *  this endpoint publicly for any storefront.
+     * ────────────────────────────────────────────────── */
+    const SHOP = 'merlin-williams-prints.myshopify.com';
+
+    async function checkStock(handle) {
+      try {
+        const res = await fetch(
+          `https://${SHOP}/products/${handle}.js`,
+          { cache: 'no-store' }
+        );
+        if (!res.ok) return null;
+        const product = await res.json();
+        return product.variants || [];
+      } catch (e) {
+        return null; // silently fail — don't break the page
+      }
+    }
+
+    async function updateStockDisplay(card) {
+      const handle  = card.dataset.shopifyHandle;
+      if (!handle) return;
+
+      const buyBtn    = card.querySelector('.buy-btn');
+      const statusEl  = card.querySelector('.stock-status');
+      if (!statusEl) return;
+
+      // Show subtle "checking" state on button while fetching
+      buyBtn && buyBtn.classList.add('checking');
+
+      const variants = await checkStock(handle);
+
+      buyBtn && buyBtn.classList.remove('checking');
+
+      if (!variants) return; // fetch failed, leave UI as-is
+
+      const totalVariants     = variants.length;
+      const availableVariants = variants.filter(v => v.available).length;
+
+      if (availableVariants === 0) {
+        // Fully sold out
+        statusEl.textContent = 'Sold out';
+        statusEl.className   = 'stock-status sold-out';
+        buyBtn && buyBtn.classList.add('sold-out');
+        buyBtn && (buyBtn.textContent = 'Sold Out');
+      } else if (availableVariants < totalVariants) {
+        // Some sizes gone
+        statusEl.textContent = 'Limited sizes remaining';
+        statusEl.className   = 'stock-status low-stock';
+      }
+      // else: all available — status stays hidden
+    }
+
+    // Run stock check for every card on page load
+    document.querySelectorAll('.print-card[data-shopify-handle]').forEach(card => {
+      updateStockDisplay(card);
+    });
+
   </script>
 
 
