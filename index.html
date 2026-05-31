@@ -1087,6 +1087,16 @@
     <div class="lb-img-wrap">
       <img id="lb-img" src="" alt="Enlarged photo" />
       <div class="lb-caption" id="lb-caption"></div>
+      <a id="lb-buy-btn" href="#" target="_blank" rel="noopener"
+         style="display:none; position:absolute; bottom:1.2rem; right:1.2rem;
+                padding:0.5rem 1.2rem; border:1px solid rgba(255,255,255,0.35);
+                color:#f0f0f0; font-family:'DM Sans',sans-serif;
+                font-size:0.62rem; font-weight:400; letter-spacing:0.18em;
+                text-transform:uppercase; text-decoration:none;
+                background:rgba(20,20,20,0.7); backdrop-filter:blur(8px);
+                transition:background 0.2s, border-color 0.2s;">
+        Buy this print &rarr;
+      </a>
     </div>
     <button class="lightbox-next" id="lb-next">Next &#8594;</button>
   </div>
@@ -1114,6 +1124,17 @@
       menu.classList.remove('open');
       setTimeout(triggerReveals, 50);
     }
+
+    /* ── Hash routing — reads index.html#portfolio etc ─
+     * When arriving from prints.html nav links, the hash
+     * tells us which page to show immediately on load.   */
+    (function handleHashOnLoad() {
+      const hash = window.location.hash.replace('#', '');
+      const validPages = ['home', 'portfolio', 'about', 'services'];
+      if (hash && validPages.includes(hash)) {
+        showPage(hash);
+      }
+    })();
 
     const ham  = document.getElementById('hamburger');
     const menu = document.getElementById('nav-links');
@@ -1349,7 +1370,7 @@
 
         if (isSwiping) {
           e.preventDefault(); // stop page scroll while swiping strip
-          translateX -= dx * 0.55; // move at a comfortable 55% of finger speed
+          translateX += dx * 0.55; // reversed: swipe left = scroll left
 
           // Loop check
           if (Math.abs(translateX) >= setWidth) translateX += setWidth;
@@ -1381,15 +1402,36 @@
       'Interstellar Dust Cloud','Reflective Trails'
     ];
 
+    /* Map gallery index → Shopify product URL (only for images that have prints) */
+    const galleryPrintLinks = {
+      0:  'https://merlin-williams-prints.myshopify.com/products/milky-way-arching-over-tasman-lake/',
+      1:  'https://merlin-williams-prints.myshopify.com/products/valley-milky-way-rising/',
+      10: 'https://merlin-williams-prints.myshopify.com/products/rho-ophiuchi/',
+      12: 'https://merlin-williams-prints.myshopify.com/products/stars-in-a-storm/',
+      /* Add more as: INDEX: 'https://merlin-williams-prints.myshopify.com/products/HANDLE/' */
+    };
+
     let currentIndex = 0;
     const lightbox  = document.getElementById('lightbox');
     const lbImg     = document.getElementById('lb-img');
     const lbCaption = document.getElementById('lb-caption');
+    const lbBuyBtn  = document.getElementById('lb-buy-btn');
+
+    function updateLbBuyBtn(i) {
+      const url = galleryPrintLinks[i];
+      if (url) {
+        lbBuyBtn.href = url;
+        lbBuyBtn.style.display = 'block';
+      } else {
+        lbBuyBtn.style.display = 'none';
+      }
+    }
 
     function openLightbox(i) {
       currentIndex = i;
       lbImg.src = galleryImages[i];
       lbCaption.textContent = galleryLabels[i];
+      updateLbBuyBtn(i);
       lightbox.classList.add('active');
       document.body.style.overflow = 'hidden';
     }
@@ -1400,12 +1442,14 @@
       currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
       lbImg.src = galleryImages[currentIndex];
       lbCaption.textContent = galleryLabels[currentIndex];
+      updateLbBuyBtn(currentIndex);
     }
 
     function lbNext() {
       currentIndex = (currentIndex + 1) % galleryImages.length;
       lbImg.src = galleryImages[currentIndex];
       lbCaption.textContent = galleryLabels[currentIndex];
+      updateLbBuyBtn(currentIndex);
     }
 
     document.querySelectorAll('.gallery-item').forEach(item =>
