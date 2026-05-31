@@ -319,9 +319,10 @@
       border-color: var(--w2);
     }
 
-    /* Sold out state */
+    /* Sold out — still clickable, just visually dimmed */
     .buy-btn.sold-out {
-      opacity: 0.35; pointer-events: none; cursor: default;
+      opacity: 0.45;
+      border-color: rgba(255,255,255,0.15);
     }
 
     /* ── CONTACT STRIP ───────────────────────────────── */
@@ -410,6 +411,11 @@
     .stock-status.low-stock {
       display: block;
       color: #c8a040;
+    }
+
+    .stock-status.in-stock {
+      display: block;
+      color: #5a9e6f;
     }
 
     .buy-btn.sold-out {
@@ -647,17 +653,20 @@
       const availableVariants = variants.filter(v => v.available).length;
 
       if (availableVariants === 0) {
-        // Fully sold out
-        statusEl.textContent = 'Sold out';
+        // Fully sold out — show label but keep button clickable
+        statusEl.textContent = 'Sold out — check back soon';
         statusEl.className   = 'stock-status sold-out';
         buyBtn && buyBtn.classList.add('sold-out');
-        buyBtn && (buyBtn.textContent = 'Sold Out');
+        buyBtn && (buyBtn.textContent = 'View Print');
       } else if (availableVariants < totalVariants) {
         // Some sizes gone
         statusEl.textContent = 'Limited sizes remaining';
         statusEl.className   = 'stock-status low-stock';
+      } else {
+        // All available
+        statusEl.textContent = 'In stock';
+        statusEl.className   = 'stock-status in-stock';
       }
-      // else: all available — status stays hidden
     }
 
     // Run stock check for every card on page load
