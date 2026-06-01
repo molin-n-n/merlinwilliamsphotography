@@ -1125,17 +1125,6 @@
       setTimeout(triggerReveals, 50);
     }
 
-    /* ── Hash routing — reads index.html#portfolio etc ─
-     * When arriving from prints.html nav links, the hash
-     * tells us which page to show immediately on load.   */
-    (function handleHashOnLoad() {
-      const hash = window.location.hash.replace('#', '');
-      const validPages = ['home', 'portfolio', 'about', 'services'];
-      if (hash && validPages.includes(hash)) {
-        showPage(hash);
-      }
-    })();
-
     const ham  = document.getElementById('hamburger');
     const menu = document.getElementById('nav-links');
     ham.addEventListener('click', () => { ham.classList.toggle('open'); menu.classList.toggle('open'); });
@@ -1252,6 +1241,16 @@
       translateX = -setWidth;
       track.style.transform = `translateX(${translateX}px)`;
       startCarousel();
+
+      /* ── sessionStorage routing from prints.html ──
+       * prints.html sets navTarget before navigating.
+       * We read it here after full init so nothing breaks. */
+      const target = sessionStorage.getItem('navTarget');
+      if (target) {
+        sessionStorage.removeItem('navTarget');
+        const valid = ['home','portfolio','about','services'];
+        if (valid.includes(target)) showPage(target);
+      }
     });
 
     /* ── Peek overlay ─────────────────────────────── */
