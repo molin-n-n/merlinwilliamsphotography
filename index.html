@@ -356,6 +356,7 @@
     .st-card {
       padding: 2.5rem 2rem; border: 1px solid var(--border);
       background: var(--bg); transition: background 0.25s;
+      display: block; color: inherit;
     }
 
     .st-card:hover { background: var(--bg2); }
@@ -467,11 +468,13 @@
     .portfolio-header { padding: 4rem 3rem 2.5rem; }
 
     .gallery-grid {
-      padding: 0 3rem 5rem;
+      padding: 0 3rem;
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       grid-auto-rows: 260px;
       gap: 6px;
+      /* Bottom margin instead of padding so future rows push the section down naturally */
+      margin-bottom: 6rem;
     }
 
     /* All rows strictly sum to 12 columns */
@@ -498,8 +501,8 @@
     /* Row 6: 7+5=12 */
     .gi-p { grid-column: span 7; }
     .gi-q { grid-column: span 5; }
-    /* Row 7: 12 full width */
-    .gi-r { grid-column: span 12; aspect-ratio: 21/9; }
+    /* Row 7: full width, taller for cinematic feel */
+    .gi-r { grid-column: span 12; grid-row: span 2; }
 
     .gallery-item {
       overflow: hidden; position: relative;
@@ -650,6 +653,7 @@
     .service-card {
       padding: 3rem 2rem; border: 1px solid var(--border);
       background: var(--bg); transition: background 0.25s;
+      display: block; color: inherit;
     }
 
     .service-card:hover { background: var(--bg2); }
@@ -751,7 +755,8 @@
       .c-item:nth-child(n) { width: 260px !important; }
 
       .gallery-grid {
-        padding: 0 1.5rem 4rem; grid-template-columns: 1fr 1fr;
+        padding: 0 1.5rem; margin-bottom: 4rem;
+        grid-template-columns: 1fr 1fr;
         grid-auto-rows: 180px; gap: 4px;
       }
       /* Reset all spanning on mobile so every item is equal 1-col, no gaps */
@@ -851,11 +856,11 @@
       <p class="section-label">What I offer:</p>
       <h2 class="section-heading">Services</h2>
       <div class="services-teaser-grid">
-        <div class="st-card">
+        <a class="st-card" href="prints.html" style="text-decoration:none; cursor:pointer;">
           <div class="st-num">01</div>
           <h3 class="st-title">Fine Art Prints</h3>
           <p class="st-desc">High quality prints of my work on professional gloss photo satin, with standard A2, A3, A4, as well as custom sizes available.</p>
-        </div>
+        </a>
         <div class="st-card">
           <div class="st-num">02</div>
           <h3 class="st-title">Night Sky Shoots</h3>
@@ -1048,11 +1053,11 @@
       <p class="section-label">What I offer:</p>
       <h2 class="section-heading">Working with Merlin</h2>
       <div class="services-full-grid">
-        <div class="service-card">
+        <a class="service-card" href="prints.html" style="text-decoration:none; cursor:pointer;">
           <div class="service-num">01</div>
           <h3 class="service-title">Fine Art Prints</h3>
           <p class="service-desc">High quality prints of my work on professional gloss photo satin, with standard A2, A3, A4, as well as custom sizes available.</p>
-        </div>
+        </a>
         <div class="service-card">
           <div class="service-num">02</div>
           <h3 class="service-title">Night Sky Shoots</h3>

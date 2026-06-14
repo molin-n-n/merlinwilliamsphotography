@@ -226,13 +226,14 @@
 
     /* ── PRINTS GRID ─────────────────────────────────── */
     .prints-section {
-      padding: 3rem 3rem 6rem; flex: 1;
+      padding: 3rem 3rem 0; flex: 1;
     }
 
     .prints-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2px;
+      margin-bottom: 6rem; /* cards push this down as more are added */
     }
 
     /* ── PRINT CARD ──────────────────────────────────── */
@@ -385,7 +386,7 @@
     /* ── RESPONSIVE ──────────────────────────────────── */
     @media (max-width: 960px) {
       .prints-grid { grid-template-columns: repeat(2, 1fr); }
-      .prints-section { padding: 2.5rem 1.5rem 5rem; }
+      .prints-section { padding: 2.5rem 1.5rem 0; }
       .filter-bar { padding: 1.5rem 1.5rem 0; }
       .prints-hero-content { padding: 2rem 1.5rem; }
       footer { flex-direction: column; align-items: center; text-align: center; }
