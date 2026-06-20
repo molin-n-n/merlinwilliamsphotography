@@ -681,11 +681,17 @@
     .lightbox.active { display: flex; }
 
     .lb-img-wrap {
-      position: relative; max-width: 90vw; max-height: 90vh;
+      position: relative;
+      max-width: min(80vw, calc(100vw - 11rem)); /* leaves guaranteed room for arrows on both sides */
+      max-height: 86vh;
       display: flex; align-items: center; justify-content: center;
     }
 
-    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; display: block; }
+    .lightbox img {
+      max-width: min(80vw, calc(100vw - 11rem));
+      max-height: 86vh;
+      object-fit: contain; display: block;
+    }
 
     /* Persistent subtle gradient + title at bottom of lightbox image */
     .lb-caption {
@@ -774,6 +780,12 @@
       .footer-copy { flex: unset; }
       .featured-as-logos img { height: 52px; }
       .about-featured-logos img { height: 44px; }
+
+      /* Lightbox: smaller fixed clearance on mobile since buttons are smaller */
+      .lb-img-wrap, .lightbox img {
+        max-width: calc(100vw - 6rem);
+        max-height: 80vh;
+      }
     }
 
     @media (max-width: 480px) {
@@ -941,7 +953,7 @@
     <div class="gallery-grid">
       <div class="gallery-item gi-a" data-index="0"><img class="gallery-photo" src="images/a.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Milky Way arching over Tasman Lake</div></div>
       <div class="gallery-item gi-b" data-index="1"><img class="gallery-photo" src="images/b.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Rising Milky Way from a secluded valley</div></div>
-      <div class="gallery-item gi-c" data-index="2"><img class="gallery-photo" src="images/c.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Comet R3 PanSTARRS flyby of Orion</div></div>
+      <div class="gallery-item gi-c" data-index="2"><img class="gallery-photo" src="images/c.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Cosmic Stranger</div></div>
       <div class="gallery-item gi-d" data-index="3"><img class="gallery-photo" src="images/d.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">A night of starglow</div></div>
       <div class="gallery-item gi-e" data-index="4"><img class="gallery-photo" src="images/e.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Large Magellanic Cloud</div></div>
       <div class="gallery-item gi-f" data-index="5"><img class="gallery-photo" src="images/f.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Small Magellanic Cloud</div></div>
@@ -1403,7 +1415,7 @@
       .map(x => `images/${x}.jpg`);
 
     const galleryLabels = [
-      'Milky Way arching over Tasman Lake','Rising Milky Way from a secluded valley','Comet R3 PanSTARRS flyby of Orion','A night of starglow','Large Magellanic Cloud',
+      'Milky Way arching over Tasman Lake','Rising Milky Way from a secluded valley','Cosmic Stranger','A night of starglow','Large Magellanic Cloud',
       'Small Magellanic Cloud','Glow of the earth amidst a universe','South beyond an Observatory','G3 the Great Comet',
       'Summer Arch above Tasman Valley','Rho Ophiuchi','Our little world','Stars in a Storm','Southern Cross','Heart of Orion',
       'Interstellar Dust Cloud','Reflective Trails','An Infinite Universe'
@@ -1413,6 +1425,7 @@
     const galleryPrintLinks = {
       0:  'https://merlin-williams-prints.myshopify.com/products/milky-way-arching-over-tasman-lake/',
       1:  'https://merlin-williams-prints.myshopify.com/products/valley-milky-way-rising/',
+      2:  'https://merlin-williams-prints.myshopify.com/products/cosmic-stranger/',
       8:  'https://merlin-williams-prints.myshopify.com/products/g3-the-great-comet/',
       10: 'https://merlin-williams-prints.myshopify.com/products/rho-ophiuchi/',
       12: 'https://merlin-williams-prints.myshopify.com/products/stars-in-a-storm/',
