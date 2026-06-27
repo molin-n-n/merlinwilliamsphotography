@@ -503,6 +503,8 @@
     .gi-q { grid-column: span 5; }
     /* Row 7: full width, taller for cinematic feel */
     .gi-r { grid-column: span 12; grid-row: span 2; }
+    /* Row 8: full width */
+    .gi-s { grid-column: span 12; }
 
     .gallery-item {
       overflow: hidden; position: relative;
@@ -969,6 +971,7 @@
       <div class="gallery-item gi-p" data-index="15"><img class="gallery-photo" src="images/p.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Interstellar Dust Cloud</div></div>
       <div class="gallery-item gi-q" data-index="16"><img class="gallery-photo" src="images/q.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Reflective Trails</div></div>
       <div class="gallery-item gi-r" data-index="17"><img class="gallery-photo" src="images/r.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">An Infinite Universe</div></div>
+      <div class="gallery-item gi-s" data-index="18"><img class="gallery-photo" src="images/s.jpg" alt="Astrophotography" loading="lazy"/><div class="gallery-caption">Highway to the Stars</div></div>
     </div>
     <div class="contact-section">
       <p class="section-label">Interested in a print?</p>
@@ -1411,14 +1414,14 @@
     })();
 
     /* ── Portfolio lightbox ───────────────────────── */
-    const galleryImages = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r']
+    const galleryImages = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s']
       .map(x => `images/${x}.jpg`);
 
     const galleryLabels = [
       'Milky Way arching over Tasman Lake','Rising Milky Way from a secluded valley','Cosmic Stranger','A night of starglow','Large Magellanic Cloud',
       'Small Magellanic Cloud','Glow of the earth amidst a universe','South beyond an Observatory','G3 the Great Comet',
       'Summer Arch above Tasman Valley','Rho Ophiuchi','Our little world','Stars in a Storm','Southern Cross','Heart of Orion',
-      'Interstellar Dust Cloud','Reflective Trails','An Infinite Universe'
+      'Interstellar Dust Cloud','Reflective Trails','An Infinite Universe','Highway to the Stars'
     ];
 
     /* Map gallery index → Shopify product URL (only for images that have prints) */
@@ -1431,6 +1434,7 @@
       12: 'https://merlin-williams-prints.myshopify.com/products/stars-in-a-storm/',
       16: 'https://merlin-williams-prints.myshopify.com/products/reflective-trails/',
       17: 'https://merlin-williams-prints.myshopify.com/products/an-infinite-universe/',
+      18: 'https://merlin-williams-prints.myshopify.com/products/highway-to-the-stars/',
       /* Add more as: INDEX: 'https://merlin-williams-prints.myshopify.com/products/HANDLE/' */
     };
 
